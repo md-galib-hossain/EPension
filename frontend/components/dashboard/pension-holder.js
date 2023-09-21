@@ -74,7 +74,7 @@ function PensionHolder() {
                 }
                 items={[
                     {
-                        title: 'In Progress',
+                        title: 'In Process',
                         description: description1,
                         // subTitle: 'Left 00:00:08',
                     },

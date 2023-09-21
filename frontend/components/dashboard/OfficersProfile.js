@@ -64,7 +64,7 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                 Name
                             </th>
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Submiison date
+                                Submission date
                             </th>
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Approved date
@@ -122,7 +122,8 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                             {application?.status}
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap">
+                                    {/* GB */}
+                                    {/* <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="text-sm leading-5 text-gray-900">
                                             {juniorOfficer?.account_status}
                                         </div>
@@ -136,7 +137,7 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                         <div className="text-sm leading-5 text-gray-900">
                                             {juniorOfficer?.rejectionReason}
                                         </div>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             </>
                         ))}

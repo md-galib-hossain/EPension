@@ -44,7 +44,7 @@ const HeadOfficer = ({ role }) => {
         <p className='text-red-500'>Error: {error.message}</p>
       ) : (
         <div className='grid grid-cols-1'>
-          <div>
+          <div className=''>
             <ComplainTable reports={reports} handleReportClick={handleReportClick} handleReportDelete={handleReportDelete} />
           </div>
           {singleReport && (
