@@ -4,5 +4,6 @@
   "/_document": "pages/_document.js",
   "/dashboard": "pages/dashboard.js",
   "/signin": "pages/signin.js",
-  "/signup": "pages/signup.js"
+  "/signup": "pages/signup.js",
+  "/pension-form": "pages/pension-form.js"
 }

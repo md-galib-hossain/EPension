@@ -22,7 +22,7 @@ function PensionHolder() {
     // Access the state using useSelector
     const allPensionFormData = useSelector((state) => state.allFormReducer?.allPensionFormData);
     // Match userId in PensionForm
-    const matchingUser = allPensionFormData?.find((user) => user.user === localStorage_user_id);
+    const matchingUser = Array.isArray(allPensionFormData) ? allPensionFormData?.find((user) => user.user === localStorage_user_id) : null;
     console.log("matchingUser: ", matchingUser);
 
     // Get userId form Localhost
