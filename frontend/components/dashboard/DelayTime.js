@@ -23,8 +23,7 @@ const shouldShowUI = !rejectionDate && applicationStatus === "pending";
 
   return shouldShowUI ? (
     <div className={roundedDaysDifference > 3 ? "text-sm leading-5 text-red-600" : "text-sm leading-5 text-gray-900"}>
-      {roundedDaysDifference}
-    </div>
+ {roundedDaysDifference <= 1 ? `${roundedDaysDifference} Day` : `${roundedDaysDifference} Days`}    </div>
   ) : (
     <div className="text-sm leading-5 text-green-500">Responded</div>
   );

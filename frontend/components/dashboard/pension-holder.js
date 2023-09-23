@@ -22,7 +22,7 @@ function PensionHolder() {
     // Access the state using useSelector
     const allPensionFormData = useSelector((state) => state.allFormReducer?.allPensionFormData);
     // Match userId in PensionForm
-    const matchingUser = allPensionFormData.find((user) => user.user === localStorage_user_id);
+    const matchingUser = allPensionFormData?.find((user) => user.user === localStorage_user_id);
     console.log("matchingUser: ", matchingUser);
 
     // Get userId form Localhost
@@ -296,15 +296,12 @@ function PensionHolder() {
 
     // Calculate the percentage of currentAmount and redeciteAmount based on yearDifference
     const currentAmountPercentage = 32 + (yearDifference - 9) * 3;
-    const redeciteAmountPercentage = 33 + (yearDifference - 9) * 3;
 
-    console.log("currentAmountPercentage: ", currentAmountPercentage);
-    console.log("redeciteAmountPercentage: ", redeciteAmountPercentage);
+    // console.log("currentAmountPercentage: ", currentAmountPercentage);
 
     // Calculate pension using the provided formula
-    console.log(`haha${matchingUser?.basic_slary , currentAmountPercentage} / 2 + 1500`);
+    // console.log(`haha${matchingUser?.basic_slary , currentAmountPercentage} / 2 + 1500`);
     const currentpension = ((matchingUser?.basic_slary * currentAmountPercentage)/100) / 2 + 1500;
-    const redecitepension = ((matchingUser?.basic_slary * redeciteAmountPercentage)/100) / 2 + 1500;
 
 
     const date = new Date();
@@ -344,7 +341,7 @@ let currentDate = `${day}-${month}-${year}`;
             <h2 className='text-[20px]'>Pension Calculations Information:</h2>
             <table className="w-full mt-4">
                 <thead>
-                    <tr className="bg-gray-800 text-white">
+                    <tr className="bg-[#009688] text-white">
                         <th className="py-2 px-4">Age of pension</th>
                         <th className="py-2 px-4">Pension Percentages</th>
                     </tr>
@@ -356,18 +353,14 @@ let currentDate = `${day}-${month}-${year}`;
                             <td className="border py-2 px-4">{item.currentAmount}</td>
                         </tr>
                     ))}
-                    <tr>
-                        <td className="border py-2 px-4">.</td>
-                        <td className="border py-2 px-4">.</td>
-                        <td className="border py-2 px-4">.</td>
-                    </tr>
-                    <tr>
+                 
+                    <tr className='bg-[#009688] text-white'>
                         <td className="border py-2 px-4">For {yearDifference} years your monthly Pension : </td>
-                        <td className="border py-2 px-4">{currentAmountPercentage}% = {currentpension}</td>
+                        <td className="border py-2 px-4">{currentpension}</td>
                     </tr>
                 </tbody>
             </table>
-            <h2 className='py-10'>Monthly Pension = (Last Basic Salary * Percentage) / 2 + 1500</h2>
+            <h2 className='py-10'>Monthly Pension = (Last Basic Salary * Percentage) / 2 + Medical Treatment Fees</h2>
         </div>
     )
 

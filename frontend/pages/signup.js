@@ -26,7 +26,12 @@ export default function Signup() {
         .string()
         .min(2, "Name must have at least 2 characters")
         .required(),
-      email: yup.string().email().required(),
+       
+      email: yup.string().email().required("Email is required")
+      .test('no-special-chars', 'Email cannot contain special characters except @', (value) => {
+        // Check if the email contains any of the specified special characters
+        return /^[a-zA-Z0-9_@.]+$/.test(value);
+      }),
       password: yup
         .string()
         .min(6, "Password at least 6 characters")
@@ -106,7 +111,7 @@ export default function Signup() {
                         onChange={formikSignUP.handleChange}
                         value={formikSignUP.values.name}
                         className="w-full bg-white  rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-300 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        placeholder="abc"
+                        placeholder="Your Full Name"
                       />
                     </div>
                     {srenderNameError}
@@ -114,6 +119,7 @@ export default function Signup() {
                       <label
                         htmlFor="email"
                         className="block mb-2 text-sm font-medium text-white"
+
                       >
                         Your email
                       </label>
@@ -124,7 +130,7 @@ export default function Signup() {
                         onChange={formikSignUP.handleChange}
                         value={formikSignUP.values.email}
                         className="w-full bg-white  rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-300 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        placeholder=""
+                        placeholder="Your Email"
 
                       />
                     </div>
@@ -143,7 +149,7 @@ export default function Signup() {
                           id="password"
                           onChange={formikSignUP.handleChange}
                           value={formikSignUP.values.password}
-                          placeholder="••••••••"
+                          placeholder="Password"
                           className="w-full bg-white  rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-300 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         />
                       </div>

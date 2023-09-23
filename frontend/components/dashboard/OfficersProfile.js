@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import DelayTime from './DelayTime';
 import SubmissionDate from './SubmissionDate';
 import ApprovedDate from './ApprovedDate';
+import RejectionDate from './RejectionDate';
 
 
 const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, onAddFlagClick }) => {
@@ -121,9 +122,9 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                       
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
-                                        <div className="text-sm leading-5 text-gray-900">
-                                            {application?.rejectionDate}
-                                        </div>
+                                            { <RejectionDate inputDate= {application?.rejectionDate}>
+                                                </RejectionDate>}
+                                        
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="text-sm leading-5 text-gray-900">
