@@ -5,8 +5,11 @@ const PensionFormSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
     },
-    fullname: {
+    fullName: {
         type: String,
+        required: [true, "Please Enter fathers Name."],
+        trim: true,
+
     },
     fathersName: {
         type: String,
