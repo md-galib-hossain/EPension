@@ -116,7 +116,7 @@ export default function PensionForm() {
     if (router.query) {
       formikPensionForm.setValues((prevValues) => ({
         ...prevValues,
-        // fullname: user?.name || "",
+        fullname: user?.name || "",
         fathersName: router.query.fathersName || "",
         mothersName: router.query.mothersName || "",
         postalCode: router.query.postalcode || "",
@@ -165,7 +165,8 @@ export default function PensionForm() {
                     />
                     {/* {formikPensionForm.touched.fullName && formikPensionForm.errors.fullName ? (
                       <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.fullName}</div>
-                    ) : null} */}
+                    ) : null} */
+                    }
                   </div>
 
                   <div className="mb-4">

@@ -117,12 +117,12 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                     <td className="px-6 py-4 whitespace-no-wrap">
                                         
                                             {
-                                                <ApprovedDate inputDate = {application?.approvalDate}></ApprovedDate>
+                                                <ApprovedDate rejectionDate={application?.rejectionDate} inputDate = {application?.approvalDate}></ApprovedDate>
                                             }
                                       
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
-                                            { <RejectionDate inputDate= {application?.rejectionDate}>
+                                            { <RejectionDate approvedDate={application?.approvalDate} inputDate= {application?.rejectionDate}>
                                                 </RejectionDate>}
                                         
                                     </td>

@@ -109,54 +109,57 @@ function JuniorOfficer({ role }) {
         return (
           <div className="grid grid-cols-1">
             <div>
-              <div className='flex gap-10 items-center'>
-                {
-                  // status.id === record.id && 
-                  <select value={status.id === record.id ? status.status : null} onChange={(e) => setStatus({ status: e.target.value, id: record.id })} className='p-2 bg-gray-100 border-gray-300'>
-                    <option value="pending">Senior Officer</option>
-                    <option value="rejected">Rejected</option>
-                  </select>
-                }
-                {status.status === 'rejected' && status.id === record.id ? (
-                  <div className=''>
-                    <p>Rejection Reason:</p>
-                    <textarea
-                      value={rejectionReason}
-                      className='border-2 border-gray-300 p-2'
-                      onChange={(e) => setRejectionReason(e.target.value)}
-                    ></textarea>
-                  </div>
-                ) : null}
+            <div className='flex gap-10 items-center'>
+  {
+    <select value={status.id === record.id ? status.status : null} onChange={(e) => setStatus({ status: e.target.value, id: record.id })} className='p-2 bg-gray-100 border-gray-300'>
+      <option value="pending">Senior Officer</option>
+      <option value="rejected">Rejected</option>
+    </select>
+  }
+  {status.status === 'rejected' && status.id === record.id ? (
+    <div className=''>
+      <p>Rejection Reason:</p>
+      <textarea
+        value={rejectionReason}
+        className='border-2 border-gray-300 p-2'
+        onChange={(e) => setRejectionReason(e.target.value)}
+      ></textarea>
+    </div>
+  ) : null}
 
-                {juniorOfficer?.account_status === 'active' ? (
-                  <>
-                    <button
-                      className={`${singleUserData?.process_status_by_role === 'assistantGeneral' || record?.isexpired === "Expired"
-                        ? 'cursor-not-allowed my-3 p-2 rounded border text-blue-700'
-                        : 'my-3 p-2 rounded border text-blue-700 hover:text-gray-100 hover:bg-blue-700 font-semibold bg-indigo-100 items-center flex gap-2'
-                        }`}
-                      onClick={() => handleUpdateStatus(record.formId)}
-                    >
-                      <CheckOutlined /> Submit
-                    </button>
-                    <Link href={{
-                      pathname: '/dashboard',
-                      query: record.formData,
-                    }}
-                    >
-                      <ViewPensionForm setOpen={setOpen} open={open} />
-                    </Link>
+  {juniorOfficer?.account_status === 'active' ? (
+    <>
+      <button
+        className={`${
+          (singleUserData?.process_status_by_role === 'assistantGeneral' || record?.isexpired === "Expired") ||
+          (status.status === 'rejected' && rejectionReason.trim() === '') // Prevent Submit when rejected and rejectionReason is empty
+            ? 'cursor-not-allowed my-3 p-2 rounded border text-blue-700'
+            : 'my-3 p-2 rounded border text-blue-700 hover:text-gray-100 hover:bg-blue-700 font-semibold bg-indigo-100 items-center flex gap-2'
+        }`}
+        onClick={() => handleUpdateStatus(record.formId)}
+        disabled={(status.status === 'rejected' && rejectionReason.trim() === '')}
+      >
+        <CheckOutlined /> Submit
+      </button>
+      <Link href={{
+        pathname: '/dashboard',
+        query: record.formData,
+      }}
+      >
+        <ViewPensionForm setOpen={setOpen} open={open} />
+      </Link>
 
-                  </>
-                ) : juniorOfficer?.account_status === 'deactive' || record?.isexpired === "Avaiable" ? (
-                  <button
-                    className={`cursor-not-allowed my-3 p-2 rounded border text-blue-700`}
-                    disabled
-                  >
-                    <CheckOutlined /> Submit (Deactive)
-                  </button>
-                ) : null}
-              </div>
+    </>
+  ) : juniorOfficer?.account_status === 'deactive' || record?.isexpired === "Avaiable" ? (
+    <button
+      className={`cursor-not-allowed my-3 p-2 rounded border text-blue-700`}
+      disabled
+    >
+      <CheckOutlined /> Submit (Deactive)
+    </button>
+  ) : null}
+</div>
+
             </div>
           </div >
         );
