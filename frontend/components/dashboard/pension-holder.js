@@ -22,7 +22,7 @@ function PensionHolder() {
     // Access the state using useSelector
     const allPensionFormData = useSelector((state) => state.allFormReducer?.allPensionFormData);
     // Match userId in PensionForm
-    const matchingUser = allPensionFormData?.find((user) => user.user === localStorage_user_id);
+    const matchingUser = allPensionFormData.find((user) => user.user === localStorage_user_id);
     console.log("matchingUser: ", matchingUser);
 
     // Get userId form Localhost
@@ -236,7 +236,7 @@ function PensionHolder() {
                             </div>
                             <div className="flex-1 text-center">
                                 <h5 className="font-bold uppercase text-gray-500">
-                                    Download Your Application Form
+                                    Download Your Pension Ticket
                                 </h5>
                             </div>
                         </div> : null}

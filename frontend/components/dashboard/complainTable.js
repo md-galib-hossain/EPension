@@ -9,8 +9,8 @@ const ComplainTable = ({ reports, handleReportClick, handleReportDelete }) => {
                     <tr className="bg-gray-100">
                         <th className="border-b p-2">Id</th>
                         <th className="border-b p-2">FullName</th>
+                        <th className="border-b p-2">Subject</th>
                         <th className="border-b p-2">Message</th>
-                        <th className="border-b p-2">Description</th>
                         {/* <th className="border-b p-2">Status</th> */}
                         <th className="border-b p-2">Complained At</th>
                         {/* <th className="border-b p-2">Action</th> */}

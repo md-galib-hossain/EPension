@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AddAssistantGeneralFlag, AddJuniorOfficerFlag, accountStatusUpdate, decreaseAssistantGeneralFlag, decreaseJuniorOfficerFlag } from '@/app/feature/headOfficer/headOfficerSlice';
 import React, { useEffect } from 'react';
+import DelayTime from './DelayTime';
+import SubmissionDate from './SubmissionDate';
+import ApprovedDate from './ApprovedDate';
 
 
 const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, onAddFlagClick }) => {
@@ -50,6 +53,9 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
     };
 
 
+
+
+
     return (
         <div>
             <div className='my-10'>
@@ -78,6 +84,9 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Processing Status
                             </th>
+                            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                Waiting for Days
+                            </th>
                             {/* <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Action
                             </th> */}
@@ -98,14 +107,18 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
-                                        <div className="text-sm leading-5 text-gray-900">
-                                            {application?.created}
-                                        </div>
+                                        
+                                            {
+                                            <SubmissionDate inputDate={application?.created} ></SubmissionDate>
+                                            }
+                                       
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
-                                        <div className="text-sm leading-5 text-gray-900">
-                                            {application?.approvalDate}
-                                        </div>
+                                        
+                                            {
+                                                <ApprovedDate inputDate = {application?.approvalDate}></ApprovedDate>
+                                            }
+                                      
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="text-sm leading-5 text-gray-900">
@@ -121,6 +134,15 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                         <div className="text-sm leading-5 text-gray-900">
                                             {application?.status}
                                         </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap">
+                                        
+                                            {
+                                            
+                                            <DelayTime rejectionDate={application?.rejectionDate} applicationStatus={application?.status} time={application?.created} ></DelayTime>
+                                            
+                                            }
+                                      
                                     </td>
                                     {/* GB */}
                                     {/* <td className="px-6 py-4 whitespace-no-wrap">
