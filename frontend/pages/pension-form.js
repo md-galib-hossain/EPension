@@ -28,8 +28,8 @@ export default function PensionForm() {
       fullName: "",
       fathersName: "",
       mothersName: "",
-      currentAdress: "",
-      permanentAdress: "",
+      currentAddress: "",
+      permanentAddress: "",
       postalCode: "",
       nidNumber: "",
       retiredAddress: "",
@@ -37,6 +37,9 @@ export default function PensionForm() {
       retiredDate: null,
       basicSalary: "",
       authorPhoneNo: "",
+      bankAccount: "",
+      jobPost: "",
+      jobId: "",
       // agreeTerms: false,
     },
 
@@ -53,10 +56,10 @@ export default function PensionForm() {
         .string()
         .matches(/^[A-Za-z\s]+$/, "mother's Name must not contain numbers")
         .required("mother's Name is required"),
-        currentAdress: yup
+        currentAddress: yup
         .string()
         .required("Current Address is required"),
-        permanentAdress: yup
+        permanentAddress: yup
         .string()
         .required("Permanent Address is required"),
       postalCode: yup.string().required("Postal Code is required"),
@@ -64,6 +67,9 @@ export default function PensionForm() {
       joinDate: yup.date().required("Join Date is required"),
       retiredDate: yup.date().required("Retired Date is required"),
       basicSalary: yup.string().required("Basic Salary is required"),
+      bankAccount: yup.string().required("Bank Account is required"),
+      jobPost: yup.string().required("Job Post is required"),
+      jobId: yup.string().required("Job Id is required"),
     }),
 
     onSubmit: (values) => {
@@ -73,13 +79,16 @@ export default function PensionForm() {
           fullName: values.fullName,
           fathersName: values.fathersName,
           mothersName: values.mothersName,
-          currentAdress: values.currentAdress,
-          permanentAdress: values.permanentAdress,
+          currentAddress: values.currentAddress,
+          permanentAddress: values.permanentAddress,
           postalcode: values.postalCode,
           nidNumber: values.nidNumber,
           joingDateOffice: values.joinDate,
           retiredDate: values.retiredDate,
           basic_slary: values.basicSalary,
+          bankAccount: values.bankAccount,
+          jobPost: values.jobPost,
+          jobId: values.jobId,
         };
 
         dispatch(updatePensionForm({ formId: _id, pensionFormData }))
@@ -102,13 +111,16 @@ export default function PensionForm() {
           fullName: values.fullName,
           fathersName: values.fathersName,
           mothersName: values.mothersName,
-          currentAdress: values.currentAdress,
-          permanentAdress: values.permanentAdress,
+          currentAddress: values.currentAddress,
+          permanentAddress: values.permanentAddress,
           postalcode: values.postalCode,
           nidNumber: values.nidNumber,
           joingDateOffice: values.joinDate,
           retiredDate: values.retiredDate,
           basic_slary: values.basicSalary,
+          bankAccount: values.bankAccount,
+          jobPost: values.jobPost,
+          jobId: values.jobId,
         };
 
         // console.log("Creating a new pension form");
@@ -137,8 +149,8 @@ export default function PensionForm() {
         fullName: router.query.fullName || "",
         fathersName: router.query.fathersName || "",
         mothersName: router.query.mothersName || "",
-        currentAdress: router.query.currentAdress || "",
-        permanentAdress: router.query.permanentAdress || "",
+        currentAddress: router.query.currentAddress || "",
+        permanentAddress: router.query.permanentAddress || "",
         postalCode: router.query.postalcode || "",
         nidNumber: router.query.nidNumber || "",
         joinDate: router.query.joingDateOffice
@@ -148,6 +160,9 @@ export default function PensionForm() {
           ? new Date(router.query.retiredDate)
           : null,
         basicSalary: router.query.basic_slary || "",
+        bankAccount: router.query.bankAccount || "",
+        jobPost: router.query.jobPost || "",
+        jobId: router.query.jobId || "",
       }));
     }
   }, [router.query]);
@@ -176,8 +191,8 @@ export default function PensionForm() {
                   {/* main flex div start*/}
                   <div className="flex flex-col gap-8"> 
                   {/* personal information start */}
-<div className="flex gap-4">
   <h3 className="text-white text-2xl font-bold">Personal Information</h3>
+<div className="flex flex-wrap gap-4">
 <div className="mb-4">
                     <label
                       htmlFor="fullName"
@@ -265,57 +280,57 @@ export default function PensionForm() {
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="currentAdress"
+                      htmlFor="currentAddress"
                       className="block text-white text-sm font-bold mb-2"
                     >
-                      Current Adress*
+                      Current Address*
                     </label>
                     <input
                       type="text"
-                      name="currentAdress"
-                      id="currentAdress"
+                      name="currentAddress"
+                      id="currentAddress"
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
-                      value={formikPensionForm.values.currentAdress}
+                      value={formikPensionForm.values.currentAddress}
                       className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
-                        formikPensionForm.touched.currentAdress &&
-                        formikPensionForm.errors.currentAdress
+                        formikPensionForm.touched.currentAddress &&
+                        formikPensionForm.errors.currentAddress
                           ? "border-red-500"
                           : ""
                       }`}
                     />
-                    {formikPensionForm.touched.currentAdress &&
-                    formikPensionForm.errors.currentAdress ? (
+                    {formikPensionForm.touched.currentAddress &&
+                    formikPensionForm.errors.currentAddress ? (
                       <div className="text-indigo-300 text-sm mt-2">
-                        {formikPensionForm.errors.currentAdress}
+                        {formikPensionForm.errors.currentAddress}
                       </div>
                     ) : null}
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="permanentAdress"
+                      htmlFor="permanentAddress"
                       className="block text-white text-sm font-bold mb-2"
                     >
-                      Permanent Adress*
+                      Permanent Address*
                     </label>
                     <input
                       type="text"
-                      name="permanentAdress"
-                      id="permanentAdress"
+                      name="permanentAddress"
+                      id="permanentAddress"
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
-                      value={formikPensionForm.values.permanentAdress}
+                      value={formikPensionForm.values.permanentAddress}
                       className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
-                        formikPensionForm.touched.permanentAdress &&
-                        formikPensionForm.errors.permanentAdress
+                        formikPensionForm.touched.permanentAddress &&
+                        formikPensionForm.errors.permanentAddress
                           ? "border-red-500"
                           : ""
                       }`}
                     />
-                    {formikPensionForm.touched.permanentAdress &&
-                    formikPensionForm.errors.permanentAdress ? (
+                    {formikPensionForm.touched.permanentAddress &&
+                    formikPensionForm.errors.permanentAddress ? (
                       <div className="text-indigo-300 text-sm mt-2">
-                        {formikPensionForm.errors.permanentAdress}
+                        {formikPensionForm.errors.permanentAddress}
                       </div>
                     ) : null}
                   </div>
@@ -382,8 +397,9 @@ export default function PensionForm() {
 </div>
                   {/* personal information end */}
                                     {/* job information start */}
-                                    <div className="flex gap-4">
+                                    <hr/>
                                     <h3 className="text-white text-2xl font-bold">Job Information</h3>
+                                    <div className="flex flex-wrap gap-4">
 
                                     <div className="mb-4">
                     <label
@@ -473,7 +489,94 @@ export default function PensionForm() {
                       </div>
                     ) : null}
                   </div>
+ 
+                  <div className="mb-4">
+                    <label
+                      htmlFor="bankAccount"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
+                      Bank Account*
+                    </label>
+                    <input
+                      type="number"
+                      name="bankAccount"
+                      id="bankAccount"
+                      onChange={formikPensionForm.handleChange}
+                      onBlur={formikPensionForm.handleBlur}
+                      value={formikPensionForm.values.bankAccount}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.bankAccount &&
+                        formikPensionForm.errors.bankAccount
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                    />
+                    {formikPensionForm.touched.bankAccount &&
+                    formikPensionForm.errors.bankAccount ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.bankAccount}
+                      </div>
+                    ) : null}
+                  </div>
 
+                  <div className="mb-4">
+                    <label
+                      htmlFor="jobPost"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
+                      Job Post*
+                    </label>
+                    <input
+                      type="text"
+                      name="jobPost"
+                      id="jobPost"
+                      onChange={formikPensionForm.handleChange}
+                      onBlur={formikPensionForm.handleBlur}
+                      value={formikPensionForm.values.jobPost}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.jobPost &&
+                        formikPensionForm.errors.jobPost
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                    />
+                    {formikPensionForm.touched.jobPost &&
+                    formikPensionForm.errors.jobPost ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.jobPost}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className="mb-4">
+                    <label
+                      htmlFor="jobId"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
+                      Job Id*
+                    </label>
+                    <input
+                      type="text"
+                      name="jobId"
+                      id="jobId"
+                      onChange={formikPensionForm.handleChange}
+                      onBlur={formikPensionForm.handleBlur}
+                      value={formikPensionForm.values.jobId}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.jobId &&
+                        formikPensionForm.errors.jobId
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                    />
+                    {formikPensionForm.touched.jobId &&
+                    formikPensionForm.errors.jobId ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.jobId}
+                      </div>
+                    ) : null}
+                  </div>
+                 
 
                                     </div>
                   {/* job information end */}

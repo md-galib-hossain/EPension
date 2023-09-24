@@ -80,7 +80,7 @@ export default function PensionForm() {
                         <div className="w-full  rounded shadow border md:mt-0 xl:p-0 bg-gray-500 border-gray-700">
                             <div className="p-10 space-y-4 md:space-y-6">
                                 <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
-                                    Share you Complain to Head Officer
+                                    Share your Complain to Head of Office
                                 </h1>
                                 <form onSubmit={formikPensionForm.handleSubmit}>
                                     <div className="mb-4">
@@ -126,7 +126,7 @@ export default function PensionForm() {
                                         type="submit"
                                         className="w-full bg-green-700 hover:bg-green-900 text-white font-medium py-2 px-4 rounded transition duration-300"
                                     >
-                                        Apply
+                                        Send
                                     </button>
                                 </form>
                             </div>
