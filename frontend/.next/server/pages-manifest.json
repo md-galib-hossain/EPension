@@ -3,6 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/dashboard": "pages/dashboard.js",
-  "/pension-form": "pages/pension-form.js",
-  "/signup": "pages/signup.js"
+  "/signin": "pages/signin.js",
+  "/signup": "pages/signup.js",
+  "/pension-form": "pages/pension-form.js"
 }

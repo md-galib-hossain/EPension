@@ -14,7 +14,8 @@ const ProcessSteps = ({ applicationStatus, statusByRole }) => {
         <LoadingOutlined />
       ) : status === "" ? (
         <UserOutlined />
-      ) : null;
+      ) : status === "approved" ? (
+        <UserOutlined /> ) :  null;
     const JuniorUsericon =
       status === "pending" && role === "assistantGeneral" ? (
         <UserOutlined />

@@ -38,11 +38,12 @@ export default function HeaderComponent() {
   // const auth = useSelector((state) => state.auth);
 
   // dispatch(currentUserProfile());
-
+const [navUser, setNavuser] = useState("")
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     console.log("user", user);
     setLocalStorage_userData(user?._id);
+    setNavuser(user?.name)
     if (user) {
       // dispatch(addAuthUserId(JSON.parse(user)));
     }
@@ -71,9 +72,13 @@ export default function HeaderComponent() {
           </Link>
           <div className="flex justify-between">
             <div className="flex justify-center items-center">
+            <div className="mx-2">
+                <p className="font-bold">{navUser}</p>
+              </div>
               <div onClick={() => handleAcount()}>
                 <UserOutlined className="text-2xl flex justify-center items-center" />
               </div>
+              
               {toggle && (
                 <div className=" flex flex-1 justify-end items-center">
                   <div
