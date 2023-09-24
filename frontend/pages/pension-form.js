@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -8,9 +7,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { addPensionForm, updatePensionForm, createPensionForm } from "@/app/feature/pensionData/pensionFormSlice";
-
-
+import {
+  addPensionForm,
+  updatePensionForm,
+  createPensionForm,
+} from "@/app/feature/pensionData/pensionFormSlice";
 
 export default function PensionForm() {
   const router = useRouter();
@@ -22,9 +23,11 @@ export default function PensionForm() {
 
   const formikPensionForm = useFormik({
     initialValues: {
-      fullName: user?.name || "",
+      fullName: "",
       fathersName: "",
       mothersName: "",
+      currentAdress: "",
+      permanentAdress: "",
       postalCode: "",
       nidNumber: "",
       retiredAddress: "",
@@ -36,14 +39,24 @@ export default function PensionForm() {
     },
 
     validationSchema: yup.object({
-      fathersName: yup
+      fullName: yup
+        .string()
+        .matches(/^[A-Za-z\s]+$/, "Father's Name must not contain numbers")
+        .required("Full Name is required"),
+        fathersName: yup
         .string()
         .matches(/^[A-Za-z\s]+$/, "Father's Name must not contain numbers")
         .required("Father's Name is required"),
-      mothersName: yup
+        mothersName: yup
         .string()
         .matches(/^[A-Za-z\s]+$/, "mother's Name must not contain numbers")
         .required("mother's Name is required"),
+        currentAdress: yup
+        .string()
+        .required("Current Address is required"),
+        permanentAdress: yup
+        .string()
+        .required("Permanent Address is required"),
       postalCode: yup.string().required("Postal Code is required"),
       nidNumber: yup.string().required("NID Number is required"),
       joinDate: yup.date().required("Join Date is required"),
@@ -55,9 +68,11 @@ export default function PensionForm() {
       if (_id) {
         // Update existing form
         const pensionFormData = {
-          fullname: user?.name || "",
+          fullName: values.fullName,
           fathersName: values.fathersName,
           mothersName: values.mothersName,
+          currentAdress: values.currentAdress,
+          permanentAdress: values.permanentAdress,
           postalcode: values.postalCode,
           nidNumber: values.nidNumber,
           joingDateOffice: values.joinDate,
@@ -75,17 +90,18 @@ export default function PensionForm() {
             if (res.payload === undefined) {
               message.error("Pension form not updated");
             }
-          }).catch((err) => {
+          })
+          .catch((err) => {
             console.log("err", err);
           });
-
-
       } else {
         // Create a new form
         const newPensionFormData = {
-          fullname: user?.name || "",
+          fullName: values.fullName,
           fathersName: values.fathersName,
           mothersName: values.mothersName,
+          currentAdress: values.currentAdress,
+          permanentAdress: values.permanentAdress,
           postalcode: values.postalCode,
           nidNumber: values.nidNumber,
           joingDateOffice: values.joinDate,
@@ -104,25 +120,31 @@ export default function PensionForm() {
             if (res.payload === undefined) {
               message.error("you are not eligible for pension!");
             }
-          }).catch((err) => {
+          })
+          .catch((err) => {
             console.log("err", err);
           });
       }
     },
-
   });
 
   useEffect(() => {
     if (router.query) {
       formikPensionForm.setValues((prevValues) => ({
         ...prevValues,
-        fullname: user?.name || "",
+        fullName: router.query.fullName || "",
         fathersName: router.query.fathersName || "",
         mothersName: router.query.mothersName || "",
+        currentAdress: router.query.currentAdress || "",
+        permanentAdress: router.query.permanentAdress || "",
         postalCode: router.query.postalcode || "",
         nidNumber: router.query.nidNumber || "",
-        joinDate: router.query.joingDateOffice ? new Date(router.query.joingDateOffice) : null,
-        retiredDate: router.query.retiredDate ? new Date(router.query.retiredDate) : null,
+        joinDate: router.query.joingDateOffice
+          ? new Date(router.query.joingDateOffice)
+          : null,
+        retiredDate: router.query.retiredDate
+          ? new Date(router.query.retiredDate)
+          : null,
         basicSalary: router.query.basic_slary || "",
       }));
     }
@@ -130,47 +152,60 @@ export default function PensionForm() {
 
   // Get User_id in LocalStorage
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     setUser(user);
   }, [_id]);
-
 
   const renderData = (
     <div>
       <Head>
         <title>Pension Form</title>
       </Head>
-      <div className='bg-white  flex justify-center items-center lg:pt-32 pt-24 pb-6'>
+      <div className="bg-white  flex justify-center items-center lg:pt-32 pt-24 pb-6">
         <section className="">
           <div className="flex flex-col items-center justify-center px-6 md:py-8 mx-auto lg:py-0">
             <div className="w-full  rounded shadow border md:mt-0 xl:p-0 bg-gray-500 border-gray-700">
               <div className="p-10 space-y-4 md:space-y-6">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
-                  Applying for pension is a commitment to<br /> your well-deserved retirement.
+                  Applying for pension is a commitment to
+                  <br /> your well-deserved retirement.
                 </h1>
                 <form onSubmit={formikPensionForm.handleSubmit}>
+                  {/* GB */}
                   <div className="mb-4">
-                    <label htmlFor="fullName" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="fullName"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Full Name*
                     </label>
                     <input
                       type="text"
                       name="fullName"
                       id="fullName"
-                      // onChange={formikPensionForm.handleChange}
+                      onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
-                      // value={formikPensionForm.values.fullName}
-                      value={user?.name}
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.fullName && formikPensionForm.errors.fullName ? "border-red-500" : ""}`}
+                      value={formikPensionForm.values.fullName}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.fullName &&
+                        formikPensionForm.errors.fullName
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {/* {formikPensionForm.touched.fullName && formikPensionForm.errors.fullName ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.fullName}</div>
-                    ) : null} */
-                    }
+                    {formikPensionForm.touched.fullName &&
+                    formikPensionForm.errors.fullName ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.fullName}
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="fathersName" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="fathersName"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Father's Name*
                     </label>
                     <input
@@ -180,15 +215,26 @@ export default function PensionForm() {
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
                       value={formikPensionForm.values.fathersName}
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.fathersName && formikPensionForm.errors.fathersName ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.fathersName &&
+                        formikPensionForm.errors.fathersName
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.fathersName && formikPensionForm.errors.fathersName ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.fathersName}</div>
+                    {formikPensionForm.touched.fathersName &&
+                    formikPensionForm.errors.fathersName ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.fathersName}
+                      </div>
                     ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="mothersName" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="mothersName"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Mother's Name*
                     </label>
                     <input
@@ -198,15 +244,82 @@ export default function PensionForm() {
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
                       value={formikPensionForm.values.mothersName}
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700  py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.mothersName && formikPensionForm.errors.mothersName ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700  py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.mothersName &&
+                        formikPensionForm.errors.mothersName
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.mothersName && formikPensionForm.errors.mothersName ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.mothersName}</div>
+                    {formikPensionForm.touched.mothersName &&
+                    formikPensionForm.errors.mothersName ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.mothersName}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="currentAdress"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
+                      Current Adress*
+                    </label>
+                    <input
+                      type="text"
+                      name="currentAdress"
+                      id="currentAdress"
+                      onChange={formikPensionForm.handleChange}
+                      onBlur={formikPensionForm.handleBlur}
+                      value={formikPensionForm.values.currentAdress}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.currentAdress &&
+                        formikPensionForm.errors.currentAdress
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                    />
+                    {formikPensionForm.touched.currentAdress &&
+                    formikPensionForm.errors.currentAdress ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.currentAdress}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="permanentAdress"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
+                      Permanent Adress*
+                    </label>
+                    <input
+                      type="text"
+                      name="permanentAdress"
+                      id="permanentAdress"
+                      onChange={formikPensionForm.handleChange}
+                      onBlur={formikPensionForm.handleBlur}
+                      value={formikPensionForm.values.permanentAdress}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.permanentAdress &&
+                        formikPensionForm.errors.permanentAdress
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                    />
+                    {formikPensionForm.touched.permanentAdress &&
+                    formikPensionForm.errors.permanentAdress ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.permanentAdress}
+                      </div>
                     ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="postalCode" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="postalCode"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Postal Code*
                     </label>
                     <input
@@ -216,15 +329,26 @@ export default function PensionForm() {
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
                       value={formikPensionForm.values.postalCode}
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700  py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.postalCode && formikPensionForm.errors.postalCode ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700  py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.postalCode &&
+                        formikPensionForm.errors.postalCode
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.postalCode && formikPensionForm.errors.postalCode ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.postalCode}</div>
+                    {formikPensionForm.touched.postalCode &&
+                    formikPensionForm.errors.postalCode ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.postalCode}
+                      </div>
                     ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="nidNumber" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="nidNumber"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       NID Number*
                     </label>
                     <input
@@ -234,49 +358,86 @@ export default function PensionForm() {
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
                       value={formikPensionForm.values.nidNumber}
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.nidNumber && formikPensionForm.errors.nidNumber ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.nidNumber &&
+                        formikPensionForm.errors.nidNumber
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.nidNumber && formikPensionForm.errors.nidNumber ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.nidNumber}</div>
+                    {formikPensionForm.touched.nidNumber &&
+                    formikPensionForm.errors.nidNumber ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.nidNumber}
+                      </div>
                     ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="joinDate" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="joinDate"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Joined Date*
                     </label>
                     <DatePicker
                       selected={formikPensionForm.values.joinDate}
-                      onChange={(date) => formikPensionForm.setFieldValue("joinDate", date)}
+                      onChange={(date) =>
+                        formikPensionForm.setFieldValue("joinDate", date)
+                      }
                       onBlur={formikPensionForm.handleBlur}
                       name="joinDate"
                       id="joinDate"
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.joinDate && formikPensionForm.errors.joinDate ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.joinDate &&
+                        formikPensionForm.errors.joinDate
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.joinDate && formikPensionForm.errors.joinDate ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.joinDate}</div>
+                    {formikPensionForm.touched.joinDate &&
+                    formikPensionForm.errors.joinDate ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.joinDate}
+                      </div>
                     ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="retiredDate" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="retiredDate"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Retired Date*
                     </label>
                     <DatePicker
                       selected={formikPensionForm.values.retiredDate}
-                      onChange={(date) => formikPensionForm.setFieldValue("retiredDate", date)}
+                      onChange={(date) =>
+                        formikPensionForm.setFieldValue("retiredDate", date)
+                      }
                       onBlur={formikPensionForm.handleBlur}
                       name="retiredDate"
                       id="retiredDate"
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.retiredDate && formikPensionForm.errors.retiredDate ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.retiredDate &&
+                        formikPensionForm.errors.retiredDate
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.retiredDate && formikPensionForm.errors.retiredDate ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.retiredDate}</div>
+                    {formikPensionForm.touched.retiredDate &&
+                    formikPensionForm.errors.retiredDate ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.retiredDate}
+                      </div>
                     ) : null}
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="basicSalary" className="block text-white text-sm font-bold mb-2">
+                    <label
+                      htmlFor="basicSalary"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
                       Last Basic Salary*
                     </label>
                     <input
@@ -286,10 +447,18 @@ export default function PensionForm() {
                       onChange={formikPensionForm.handleChange}
                       onBlur={formikPensionForm.handleBlur}
                       value={formikPensionForm.values.basicSalary}
-                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${formikPensionForm.touched.basicSalary && formikPensionForm.errors.basicSalary ? "border-red-500" : ""}`}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.basicSalary &&
+                        formikPensionForm.errors.basicSalary
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formikPensionForm.touched.basicSalary && formikPensionForm.errors.basicSalary ? (
-                      <div className="text-indigo-300 text-sm mt-2">{formikPensionForm.errors.basicSalary}</div>
+                    {formikPensionForm.touched.basicSalary &&
+                    formikPensionForm.errors.basicSalary ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.basicSalary}
+                      </div>
                     ) : null}
                   </div>
 
@@ -328,5 +497,3 @@ export default function PensionForm() {
 
   return renderData;
 }
-
-

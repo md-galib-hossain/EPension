@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from 'next/link';
 import jsPDF from 'jspdf';
 import { fetchAllPensionFormData } from '@/app/feature/pensionData/pensionFormSlice';
+import ProcessSteps from './ProcessSteps';
 
 function PensionHolder() {
     const [localStorage_user_id, setLocalStorage_user_id] = useState();
@@ -41,12 +42,12 @@ function PensionHolder() {
     }
 
 
-    // All Procces step
-    const description1 = `${matchingUser?.status === "rejected" ? 'Your application has been Rejected' : ' Your Application is under process.'}`;
-    const description2 = 'Your Application is on Junior Officer';
-    const description3 = 'Your Application is on Assistance General Officer.';
-    const description4 = `${matchingUser?.status === "rejected" ? 'Your application has been Rejected' : ' Your Application is under process.'}`;
-    const description5 = 'Your Application is Approved.';
+    // // All Procces step
+    // const description1 = `${matchingUser?.status === "rejected" ? 'Your application has been Rejected' : ' Your Application is under process.'}`;
+    // const description2 = 'Your Application is on Junior Officer';
+    // const description3 = 'Your Application is on Assistance General Officer.';
+    // const description4 = `${matchingUser?.status === "rejected" ? 'Your application has been Rejected' : ' Your Application is under process.'}`;
+    // const description5 = 'Your Application is Approved.';
 
     // Pension process System
     const pensionProcess = (
@@ -56,16 +57,16 @@ function PensionHolder() {
             </div>
             {matchingUser?.status === "rejected" ?
                 <>
-                    <div className=' mb-8 text-center bg-red-50 w-1/5 mx-auto py-6'>
+                    <div className='w-1/4 mb-20 text-center bg-red-50 w-1/5 mx-auto p-6'>
                         <p> <BellOutlined style={{ fontSize: "30px", color: "red" }} /></p>
                         Application rejected by <span className='text-red-400 font-semibold'>{matchingUser?.rejected_by_role}</span>
-                        <p className=' text-yellow-400 mb-10 text-center'>{matchingUser?.rejectionReason}</p>
+                        <p className=' text-yellow-400  text-center'>{matchingUser?.rejectionReason}</p>
                     </div>
                 </>
                 :
                 ""
             }
-            <Steps
+            {/* <Steps
                 style={{ width: '85%', margin: '0 auto', fontFamily: 'sans-serif' }}
                 current={
                     matchingUser?.process_status_by_role === "juniorOfficer" ? 1 :
@@ -96,7 +97,9 @@ function PensionHolder() {
                         description: description5,
                     },
                 ]}
-            />
+            /> */}
+            <ProcessSteps statusByRole={matchingUser?.process_status_by_role
+} applicationStatus={matchingUser?.status}></ProcessSteps>
         </div>
     )
 
@@ -150,7 +153,7 @@ function PensionHolder() {
                 <tbody>
                     <tr>
                         <td className="border py-2 px-4">Name</td>
-                        <td className="border py-2 px-4">{user?.name}</td>
+                        <td className="border py-2 px-4">{matchingUser?.fullName}</td>
                     </tr>
                     <tr>
                         <td className="border py-2 px-4">Father's Name</td>

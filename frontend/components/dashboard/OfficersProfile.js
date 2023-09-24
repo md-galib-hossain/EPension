@@ -104,7 +104,7 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="text-sm leading-5 text-gray-900">
-                                            {application?.fullname}
+                                            {application?.fullName }
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
@@ -128,7 +128,7 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="text-sm leading-5 text-gray-900">
-                                            {application?.process_status_by_role}
+                                            {application?.process_status_by_role || application.rejected_by_role}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
@@ -190,11 +190,11 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Flags
                             </th>
-                            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            {/* <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Number of Complaints
-                            </th>
+                            </th> */}
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Add Flags
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -231,13 +231,13 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                         {assistantGeneral.flags}
                                     </div>
                                 </td>
-                                <td className="px-6 py-4 whitespace-no-wrap">
+                                {/* <td className="px-6 py-4 whitespace-no-wrap">
                                     <div className="text-sm leading-5 text-gray-900">
                                         Total: {assistantGeneral.numOfComplain}<br />
                                         Resolved: {assistantGeneral.numOfComplainResolved}<br />
                                         Unresolved: {assistantGeneral.numOfComplainUnresolved}
                                     </div>
-                                </td>
+                                </td> */}
                                 <td className="px-6 py-4 whitespace-no-wrap flex gap-4">
                                     {/* Add Flag Button */}
                                     <button
@@ -299,11 +299,11 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Flags
                             </th>
-                            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            {/* <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Number of Complaints
-                            </th>
+                            </th> */}
                             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Add Flags
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -340,13 +340,13 @@ const OfficersProfile = ({ role, applications, assistantGeneral, juniorOfficer, 
                                         {juniorOfficer.flags}
                                     </div>
                                 </td>
-                                <td className="px-6 py-4 whitespace-no-wrap">
+                                {/* <td className="px-6 py-4 whitespace-no-wrap">
                                     <div className="text-sm leading-5 text-gray-900">
                                         Total: {juniorOfficer.numOfComplain}<br />
                                         Resolved: {juniorOfficer.numOfComplainResolved}<br />
                                         Unresolved: {juniorOfficer.numOfComplainUnresolved}
                                     </div>
-                                </td>
+                                </td> */}
                                 <td className="px-6 py-4 whitespace-no-wrap flex gap-4">
                                     {/* Add Flag Button */}
                                     <button

@@ -36,7 +36,7 @@ export default function PensionForm() {
             const { fullName, complain_title, complain_des } = values;
 
             const data = {
-                fullName: user?.name,
+                fullName: fullName,
                 complain_title,
                 complain_des,
             };

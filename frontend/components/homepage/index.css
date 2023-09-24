@@ -1,0 +1,25 @@
+/* .ant-float-btn-content{
+    width : 4rem !important;
+    min-height: "60px" !important;
+}
+.ant-float-btn-body{
+    width : 4rem !important;
+    min-height: 60px !important;
+} */
+.ant-float-btn-square .ant-float-btn-body {
+  min-height: 60px;
+}
+.ant-float-btn-default .ant-float-btn-body:hover {
+    background-color: #0e364a;
+  }
+  
+  /* Change text color when hovering over the parent element */
+  .ant-float-btn-default .ant-float-btn-body:hover .ant-float-btn-content .ant-float-btn-description {
+    color: white;
+  }
+  
+  /* Change the color of SVG files to white */
+  .ant-float-btn-body:hover svg {
+    fill: white; /* Change the fill color to white */
+  }
+

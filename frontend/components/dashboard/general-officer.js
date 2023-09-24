@@ -138,7 +138,7 @@ function GeneralOfficer({ role }) {
                 {assistantGeneral?.account_status === 'active' ? (
                   <>
                     <button
-                      className={`${singleUserData?.process_status_by_role === 'juniorOfficer' || record?.isexpired === "Expired"
+                      className={`${singleUserData?.process_status_by_role === 'juniorOfficer' || record?.isexpired === "Expired" || (status.status === 'rejected' && rejectionReason.trim() === '')
                         ? 'cursor-not-allowed my-3 p-2 rounded border text-blue-700'
                         : 'my-3 p-2 rounded border text-blue-700 hover:text-gray-100 hover:bg-blue-700 font-semibold bg-indigo-100 items-center flex gap-2'
                         }`}
