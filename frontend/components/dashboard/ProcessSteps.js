@@ -2,7 +2,7 @@ import { Steps } from "antd";
 import {
   LoadingOutlined,
   UserOutlined,
-  WarningOutlined,
+  WarningOutlined,CheckOutlined,ClockCircleOutlined
 } from "@ant-design/icons";
 import React from "react";
 import "./index.css";
@@ -55,7 +55,7 @@ const ProcessSteps = ({ applicationStatus, statusByRole }) => {
       },
       {
         title: pendingStatus || rejectedStatus || approvedStatus,
-        icon: status === "rejected" || "pending" ? <WarningOutlined /> : null,
+        icon: status === "rejected" ? <WarningOutlined /> : status === "pending" ? <ClockCircleOutlined /> : status === "approved" ?  <CheckOutlined/> : null,
       },
     ];
 
@@ -68,13 +68,17 @@ const ProcessSteps = ({ applicationStatus, statusByRole }) => {
 
     return steps;
   };
-
+  const currentjuniorStep = statusByRole === "juniorOfficer" && 0
+  const currentassistantStep = statusByRole === "assistantGeneral" && 1
+  const currentfinalStep = applicationStatus === "approved" && 2
   return (
     <div>
       <Steps
+      current={currentjuniorStep || currentassistantStep || currentfinalStep || null }
         style={{ width: "85%", margin: "0 auto", fontFamily: "sans-serif" }}
         items={generateSteps(applicationStatus, statusByRole)}
       />
+      
     </div>
   );
 };

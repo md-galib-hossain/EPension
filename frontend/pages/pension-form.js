@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +15,7 @@ import {
 } from "@/app/feature/pensionData/pensionFormSlice";
 
 export default function PensionForm() {
+  
   const router = useRouter();
   const dispatch = useDispatch();
   const [user, setUser] = useState();
@@ -171,8 +173,12 @@ export default function PensionForm() {
                   <br /> your well-deserved retirement.
                 </h1>
                 <form onSubmit={formikPensionForm.handleSubmit}>
-                  {/* GB */}
-                  <div className="mb-4">
+                  {/* main flex div start*/}
+                  <div className="flex flex-col gap-8"> 
+                  {/* personal information start */}
+<div className="flex gap-4">
+  <h3 className="text-white text-2xl font-bold">Personal Information</h3>
+<div className="mb-4">
                     <label
                       htmlFor="fullName"
                       className="block text-white text-sm font-bold mb-2"
@@ -200,7 +206,6 @@ export default function PensionForm() {
                       </div>
                     ) : null}
                   </div>
-
                   <div className="mb-4">
                     <label
                       htmlFor="fathersName"
@@ -373,7 +378,14 @@ export default function PensionForm() {
                     ) : null}
                   </div>
 
-                  <div className="mb-4">
+
+</div>
+                  {/* personal information end */}
+                                    {/* job information start */}
+                                    <div className="flex gap-4">
+                                    <h3 className="text-white text-2xl font-bold">Job Information</h3>
+
+                                    <div className="mb-4">
                     <label
                       htmlFor="joinDate"
                       className="block text-white text-sm font-bold mb-2"
@@ -462,6 +474,18 @@ export default function PensionForm() {
                     ) : null}
                   </div>
 
+
+                                    </div>
+                  {/* job information end */}
+                  </div>
+                                    {/* main flex div end*/}
+
+                  {/* GB */}
+                  
+
+                  
+
+                 
                   {/* <div className="mb-4">
                     <label htmlFor="agreeTerms" className="block text-white text-sm font-bold mb-2">
                       <input
@@ -482,7 +506,8 @@ export default function PensionForm() {
 
                   <button
                     type="submit"
-                    className="w-full bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded transition duration-300"
+                   
+                    className="w-1/5 block mx-auto my-6 bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded transition duration-300"
                   >
                     Apply
                   </button>
