@@ -203,6 +203,14 @@ function PensionHolder() {
             <td className="border py-2 px-4">{matchingUser?.mothersName}</td>
           </tr>
           <tr>
+            <td className="border py-2 px-4">Current Address</td>
+            <td className="border py-2 px-4">{matchingUser?.currentAddress}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Permanent Address</td>
+            <td className="border py-2 px-4">{matchingUser?.permanentAddress}</td>
+          </tr>
+          <tr>
             <td className="border py-2 px-4">NID Number</td>
             <td className="border py-2 px-4">{matchingUser?.nidNumber}</td>
           </tr>
@@ -227,6 +235,18 @@ function PensionHolder() {
           <tr>
             <td className="border py-2 px-4">Basic Salary</td>
             <td className="border py-2 px-4">{matchingUser?.basic_slary}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Job Post</td>
+            <td className="border py-2 px-4">{matchingUser?.jobPost}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Job Id</td>
+            <td className="border py-2 px-4">{matchingUser?.jobId}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Bank Account</td>
+            <td className="border py-2 px-4">{matchingUser?.bankAccount}</td>
           </tr>
         </tbody>
       </table>
@@ -466,8 +486,8 @@ function PensionHolder() {
         Treatment Fees
       </h2>
       <div className="py-10 bg-[#009688] text-white">
-        <p> Your Monthly Pension : {currentpension}</p>
-        <p>Total Pension From Retirement to Application Date: {totalPension}</p>
+        <p> Your Monthly Pension : {Math.floor(currentpension)}</p>
+        <p>Total Pension From Retirement to Application Date: {Math.floor(totalPension)}</p>
       </div>
     </div>
   );

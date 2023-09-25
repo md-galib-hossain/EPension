@@ -67,7 +67,7 @@ function JuniorOfficer({ role }) {
 
 
   const dataSource = allApplications?.map((formData, index) => {
-    // console.log("formData: ", formData);
+    console.log("formData: ", formData);
     let isexpired = false;
     formData?.from_expired_out?.map((expired_out) => {
       if (expired_out?.expired_out_by_user === localStorage_user_id) {

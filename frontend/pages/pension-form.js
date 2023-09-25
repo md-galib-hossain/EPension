@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-import { message } from "antd";
+import "./index.css"
+import { message,Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addPensionForm,
@@ -15,6 +15,7 @@ import {
 } from "@/app/feature/pensionData/pensionFormSlice";
 
 export default function PensionForm() {
+  const {Option} = Select
   
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function PensionForm() {
       bankAccount: "",
       jobPost: "",
       jobId: "",
+      jobDepartment: "",
       // agreeTerms: false,
     },
 
@@ -70,10 +72,14 @@ export default function PensionForm() {
       bankAccount: yup.string().required("Bank Account is required"),
       jobPost: yup.string().required("Job Post is required"),
       jobId: yup.string().required("Job Id is required"),
+      jobDepartment: yup.string().required("Department is required"),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
+
       if (_id) {
+      
+
         // Update existing form
         const pensionFormData = {
           fullName: values.fullName,
@@ -89,13 +95,34 @@ export default function PensionForm() {
           bankAccount: values.bankAccount,
           jobPost: values.jobPost,
           jobId: values.jobId,
+          jobDepartment: values.jobDepartment,
         };
 
         dispatch(updatePensionForm({ formId: _id, pensionFormData }))
           .then((res) => {
-            console.log("res", res);
-            if (res.payload.success) {
-              message.success("Pension form updated successfully");
+            console.log("res", res)
+            if (res.payload) {
+              message.success("Pension form updated successfully")
+                    // Form reset logic start here
+
+              resetForm()
+                  // Reset validation errors by reinitializing Formik with a new validation schema
+      const newFormik = useFormik({
+        initialValues: {
+          // ... your initial values ...
+        },
+        validationSchema: yup.object({
+          // ... your validation schema ...
+        }),
+        onSubmit: (values) => {
+          // Your new form submission logic
+        },
+      });
+
+      // Replace the old formik object with the new one
+      formik = newFormik;
+
+      // Form reset logic end here
               // window.location.href = "/dashboard";
             }
             if (res.payload === undefined) {
@@ -121,6 +148,7 @@ export default function PensionForm() {
           bankAccount: values.bankAccount,
           jobPost: values.jobPost,
           jobId: values.jobId,
+          jobDepartment: values.jobDepartment,
         };
 
         // console.log("Creating a new pension form");
@@ -129,6 +157,27 @@ export default function PensionForm() {
             console.log("res", res);
             if (res.payload) {
               message.success("Pension form created successfully");
+                    // Form reset logic start here
+
+              resetForm();
+                  // Reset validation errors by reinitializing Formik with a new validation schema
+      const newFormik = useFormik({
+        initialValues: {
+          // ... your initial values ...
+        },
+        validationSchema: yup.object({
+          // ... your validation schema ...
+        }),
+        onSubmit: (values) => {
+          // Your new form submission logic
+        },
+      });
+
+      // Replace the old formik object with the new one
+      formik = newFormik;
+            // Form reset logic end here
+
+
               // window.location.href = "/dashboard";
             }
             if (res.payload === undefined) {
@@ -163,10 +212,10 @@ export default function PensionForm() {
         bankAccount: router.query.bankAccount || "",
         jobPost: router.query.jobPost || "",
         jobId: router.query.jobId || "",
+        jobDepartment: router.query.jobDepartment || "",
       }));
     }
   }, [router.query]);
-
   // Get User_id in LocalStorage
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -577,6 +626,39 @@ export default function PensionForm() {
                     ) : null}
                   </div>
                  
+                  <div className="mb-4 w-1/5">
+  <label
+    htmlFor="department"
+    className="block text-white text-sm font-bold mb-2"
+  >
+    Department*
+  </label>
+  <Select
+    name="jobDepartment"
+    id="jobDepartment"
+    value={formikPensionForm.values.jobDepartment}
+    onChange={(value) => formikPensionForm.setFieldValue("jobDepartment", value)}
+    onBlur={formikPensionForm.handleBlur}
+    className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+      formikPensionForm.touched.jobDepartment &&
+      formikPensionForm.errors.jobDepartment
+        ? "border-red-500"
+        : ""
+    }`}
+  >
+    <Option value="Bangladesh Army">Bangladesh Army</Option>
+    <Option value="Bangladesh Police">Bangladesh Police</Option>
+    <Option value="Bangladesh Forest Department">Bangladesh Forest Department</Option>
+    <Option value="Bangladesh Railway">Bangladesh Railway</Option>
+    <Option value="Local Government Engineering Department">Local Government Engineering Department</Option>
+  </Select>
+  {formikPensionForm.touched.jobDepartment &&
+  formikPensionForm.errors.jobDepartment ? (
+    <div className="text-indigo-300 text-sm mt-2">
+      {formikPensionForm.errors.jobDepartment}
+    </div>
+  ) : null}
+</div>
 
                                     </div>
                   {/* job information end */}
