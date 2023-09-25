@@ -7,7 +7,43 @@ const PensionFormSchema = new mongoose.Schema({
     },
     fullName: {
         type: String,
-        required: [true, "Please Enter fathers Name."],
+        required: [true, "Please Enter Your Name."],
+        trim: true,
+
+    },
+    currentAddress: {
+        type: String,
+        required: [true, "Please Enter Address."],
+        trim: true,
+
+    },
+    permanentAddress: {
+        type: String,
+        required: [true, "Please Enter Address."],
+        trim: true,
+
+    },
+    bankAccount: {
+        type: Number,
+        required: [true, "Please Enter Bank Account No."],
+        trim: true,
+
+    },
+    jobPost: {
+        type: String,
+        required: [true, "Please Enter Job Post Address."],
+        trim: true,
+
+    },
+    jobId: {
+        type: Number,
+        required: [true, "Please Enter Job Id."],
+        trim: true,
+
+    },
+    jobDepartment: {
+        type: String,
+        required: [true, "Please Enter Department."],
         trim: true,
 
     },

@@ -4,7 +4,7 @@ const ReportSchema = require("../models/ReportFromPensionholder");
 // creating pension form.
 exports.CreatePensionForm = async (req, res, next) => {
     user = req.user.id
-    const { fullName,fathersName, mothersName, postalcode, basic_slary, nidNumber, joingDateOffice, retiredDate } = req.body;
+    const { fullName,fathersName, mothersName,currentAddress,permanentAddress, postalcode, basic_slary, nidNumber, joingDateOffice, retiredDate,bankAccount,jobPost,jobId,jobDepartment } = req.body;
 
     try {
         // check fathers name and mothers name should be string
@@ -30,7 +30,7 @@ exports.CreatePensionForm = async (req, res, next) => {
                 return res.status(400).json({ success: false, message: 'You already submitted pension form' });
             }
 
-            const pensionform = await PensionForm.create({ user,fullName, fathersName, mothersName, basic_slary, postalcode, nidNumber, joingDateOffice, retiredDate })
+            const pensionform = await PensionForm.create({ user,fullName, fathersName, mothersName, basic_slary, postalcode, nidNumber, joingDateOffice, retiredDate,currentAddress,permanentAddress,bankAccount,jobPost,jobId,jobDepartment })
             // console.log("backend------", pensionform);
             // calculate pension with basic salary then update existing pensionform with new pension
             const pension = (basic_slary * 12) / 2 + 1500;
