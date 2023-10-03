@@ -10,7 +10,6 @@ export default function ViewPensionForm({ setOpen, open }) {
   const closeModal = () => {
     setOpen(false);
   };
-
   return (
     <div>
       {/* <!-- Modal toggle --> */}

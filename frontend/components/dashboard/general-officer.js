@@ -22,7 +22,7 @@ function GeneralOfficer({ role }) {
 
   const [open, setOpen] = useState(false);
   const [assistantGeneral, setAssistantGeneral] = useState({});
-
+  const [govtData, setGovtData] = useState([]); // State to store government data
   // Pension Form Data
   const { allApplications } = useSelector((state) => state.GeneralOfficer);
   const singleUserData = allApplications?.find((user) => user._id === user._id ? user : null);
@@ -43,6 +43,27 @@ function GeneralOfficer({ role }) {
   }, [dispatch]);
 
 
+  useEffect(() => {
+    // Make a GET request to your API endpoint
+    fetch("http://localhost:5000/govtdata")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Update the govtData state with the fetched data
+        setGovtData(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        // Set the error state if there's a problem with the request
+        setError("Error fetching data");
+      });
+  }, []); // The empty dependency array ensures this effect runs once on component mount
+
+
 
   // Get userId form Localhost
   useEffect(() => {
@@ -59,7 +80,6 @@ function GeneralOfficer({ role }) {
       rejectionReason,
     };
 
-    console.log("newData: ", newData);
 
     dispatch(updateAssistanceGeneral({ formId, newData }))
       .then(() => {
@@ -83,6 +103,7 @@ function GeneralOfficer({ role }) {
         isexpired = expired_out?.isexpired;
       }
     })
+
 
     const date = new Date(formData?.created).toLocaleDateString("en-US");
 
@@ -113,6 +134,7 @@ function GeneralOfficer({ role }) {
     {
       title: "Actions",
       render: (record) => {
+
         return (
           <div className="grid grid-cols-1">
             <div>

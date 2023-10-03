@@ -6,6 +6,7 @@ import OfficersProfile from './OfficersProfile';
 import ComplainTable from './complainTable';
 
 const HeadOfficer = ({ role }) => {
+
   const dispatch = useDispatch();
   const { flag, reports, Officers, applications, assistantGeneralFlag, juniorOfficerFlag, singleReport, loading, error } = useSelector(
     (state) => state.headOfficer);
@@ -37,7 +38,7 @@ const HeadOfficer = ({ role }) => {
 
   return (
     <div className='mt-24 ml-10'>
-      <h1 className='text-2xl font-semibold mb-4'>Head Officer Slice</h1>
+      <h1 className='text-2xl font-semibold mb-4'>Head Of Office Dashboard </h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (

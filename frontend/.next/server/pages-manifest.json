@@ -2,6 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
+  "/signin": "pages/signin.js",
+  "/signup": "pages/signup.js",
+  "/pension-form": "pages/pension-form.js",
   "/dashboard": "pages/dashboard.js"
 }

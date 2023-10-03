@@ -65,16 +65,20 @@ const ProcessSteps = ({ applicationStatus, statusByRole }) => {
     } else if (status === "pending") {
       steps[2].status = "wait"; // Set the Approved step to wait status for pending applications
     }
+     else if (status === "approved") {
+      steps[2].status = "approved"; // Set the Approved step to wait status for pending applications
+    }
 
     return steps;
   };
   const currentjuniorStep = statusByRole === "juniorOfficer" && 0
   const currentassistantStep = statusByRole === "assistantGeneral" && 1
   const currentfinalStep = applicationStatus === "approved" && 2
+  console.log(currentfinalStep)
   return (
     <div>
       <Steps
-      current={currentjuniorStep || currentassistantStep || currentfinalStep || null }
+      current={currentfinalStep || currentassistantStep || currentjuniorStep ||  null }
         style={{ width: "85%", margin: "0 auto", fontFamily: "sans-serif" }}
         items={generateSteps(applicationStatus, statusByRole)}
       />

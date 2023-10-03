@@ -64,6 +64,8 @@ function PensionHolder() {
       <div className="pb-8 text-2xl text-center uppercase font-serif font-semibold text-gray-500">
         Tracking on your application
       </div>
+
+      {/* rejection reason */}
       {matchingUser?.status === "rejected" ? (
         <>
           <div className="w-1/4 mb-20 text-center bg-red-50 w-1/5 mx-auto p-6">
@@ -83,6 +85,28 @@ function PensionHolder() {
       ) : (
         ""
       )}
+
+      {/* expired status */}
+      {matchingUser?.from_expired_out[0]?.isexpired === true ? (
+        <>
+          <div className="w-1/4 mb-20 text-center bg-red-50 w-1/5 mx-auto p-6">
+            <p>
+              {" "}
+              <BellOutlined style={{ fontSize: "30px", color: "red" }} />
+            </p>
+            {matchingUser?.process_status_by_role} didn't responded your
+            application in time
+            <br />
+            <p className="text-green-600">
+              {" "}
+              You can Complain to Head Of Office
+            </p>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+
       {/* <Steps
                 style={{ width: '85%', margin: '0 auto', fontFamily: 'sans-serif' }}
                 current={
@@ -208,7 +232,9 @@ function PensionHolder() {
           </tr>
           <tr>
             <td className="border py-2 px-4">Permanent Address</td>
-            <td className="border py-2 px-4">{matchingUser?.permanentAddress}</td>
+            <td className="border py-2 px-4">
+              {matchingUser?.permanentAddress}
+            </td>
           </tr>
           <tr>
             <td className="border py-2 px-4">NID Number</td>
@@ -420,25 +446,72 @@ function PensionHolder() {
 
   // Download PDF
   const handleDownloadPDF = () => {
+
+    //     Total Pension (from retirement to current date): ${totalPension}
+
     // Create a new jsPDF instance
     const pdf = new jsPDF();
+
+    // Calculate the x-coordinate for centering the image
+    const pdfWidth = pdf.internal.pageSize.width;
+    const imgWidth = 40; // Adjust this based on the actual width of your image
+    const xCoordinate = (pdfWidth - imgWidth) / 2;
+
+    // Add image to the top center
+    const imgData2 = "https://i.ibb.co/ZVQYjkV/pngegg-1.png"; // Replace with your image data
+    pdf.addImage(imgData2, "PNG", xCoordinate, 20, 40, 40); // Adjust the coordinates and dimensions as needed
+
+    // Add image to a little more above the bottom right side
+    const imgData = "https://i.ibb.co/CtGMnMQ/pngegg.png"; // Replace with your image data
+    pdf.addImage(imgData, "JPEG", 150, 230, 40, 40); // Adjust the coordinates and dimensions as needed
+
+    // Set font size and style
+    pdf.setFontSize(12); // Adjust the font size as needed
+    pdf.setFont("times", "normal"); // You can use other professional fonts like "times", "arial", etc.
+
+    // Add the content to the PDF after the image
     const content = `
-            Pension Holder Information:
-                      -----------
-            Your application has been : ${matchingUser.status} Successfully!
-                      -----------
-            total year of service : ${yearDifference}
-            Last Basic Salary: ${matchingUser?.basic_slary}
-            your Monthly pension rate : ${currentpension}
-            your Total Pension from retired date to current date : ${totalPension}
-            Pension of Date : ${currentDate}
 
-            Join Date: ${joingDate}
-            Retirement Date: ${retiredDate}
-            `;
+    Pensioner Information Notice
+    -----------------------------
 
-    // Add the content to the PDF
-    pdf.text(content, 10, 10);
+    Dear ${matchingUser?.fullName},
+
+    This is to inform you that your pension application has been successfully processed, 
+    and your Pension Book is now ready for collection at your local pension office. 
+    Please find below the details of your pension account:
+
+    Pension Holder Information:
+    ---------------------------
+    Application Status: ${matchingUser.status}
+    You may now proceed to collect your Pension Book from your designated pension office.
+
+    Important Details:
+    -------------------
+    Total Years of Service: ${yearDifference}
+    Last Basic Salary: ${matchingUser?.basic_slary}
+    Monthly Pension Rate: ${currentpension}
+    Pension Book Issuance Date: ${currentDate}
+
+    Employment Dates:
+    -----------------
+    Joining Date: ${joingDate}
+    Retirement Date: ${retiredDate}
+
+    Please carry a valid identification (NID) document and this ticket when collecting your Pension Book.
+
+    Your cooperation is appreciated, and we congratulate you on your retirement.
+
+  
+    Date
+    ${currentDate}
+`;
+//   [Government Department Name]
+// [Contact Information]
+// [Address]
+
+    // Add the content to the PDF after the image
+    pdf.text(content, 10, 70);
 
     // Save the PDF with a filename
     pdf.save("PensionHolderInfo.pdf");
@@ -455,16 +528,29 @@ function PensionHolder() {
         fontFamily: "sans-serif",
       }}
     >
-      <h2 className="text-[20px] text-4xl">Pension Calculations Information:</h2>
-      
-      <p className="text-xl">Government Servants Pension Simplification Order, 2020</p>
-      <p className="text-[#009688]">------- Go to 57 page of the Reference PDF -------</p>
+      <h2 className="text-[20px] text-4xl">
+        Pension Calculations Information:
+      </h2>
+
+      <p className="text-xl">
+        Government Servants Pension Simplification Order, 2020
+      </p>
+      <p className="text-[#009688]">
+        ------- Go to 57 page of the Reference PDF -------
+      </p>
 
       <div className="my-4 mx-auto w-1/4 bg-[#0E364A] text-white py-2">
-      <Link className="" target="blank" href={'https://mof.gov.bd/site/notices/abe27e3a-4866-4a0c-9402-a5eb7fe6659f/%E0%A6%B8%E0%A6%B0%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%BF-%E0%A6%95%E0%A6%B0%E0%A7%8D%E0%A6%AE%E0%A6%9A%E0%A6%BE%E0%A6%B0%E0%A7%80%E0%A6%97%E0%A6%A3%E0%A7%87%E0%A6%B0-%E0%A6%AA%E0%A7%87%E0%A6%A8%E0%A6%B6%E0%A6%A8-%E0%A6%B8%E0%A6%B9%E0%A6%9C%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3-%E0%A6%86%E0%A6%A6%E0%A7%87%E0%A6%B6-%E0%A7%A8%E0%A7%A6%E0%A7%A8%E0%A7%A6'}>
-      Reference of this table calculation </Link>
+        <Link
+          className=""
+          target="blank"
+          href={
+            "https://mof.gov.bd/site/notices/abe27e3a-4866-4a0c-9402-a5eb7fe6659f/%E0%A6%B8%E0%A6%B0%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%BF-%E0%A6%95%E0%A6%B0%E0%A7%8D%E0%A6%AE%E0%A6%9A%E0%A6%BE%E0%A6%B0%E0%A7%80%E0%A6%97%E0%A6%A3%E0%A7%87%E0%A6%B0-%E0%A6%AA%E0%A7%87%E0%A6%A8%E0%A6%B6%E0%A6%A8-%E0%A6%B8%E0%A6%B9%E0%A6%9C%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3-%E0%A6%86%E0%A6%A6%E0%A7%87%E0%A6%B6-%E0%A7%A8%E0%A7%A6%E0%A7%A8%E0%A7%A6"
+          }
+        >
+          Reference of this table calculation{" "}
+        </Link>
       </div>
-      
+
       <table className="w-full mt-4">
         <thead>
           <tr className="bg-[#009688] text-white">
@@ -482,12 +568,15 @@ function PensionHolder() {
         </tbody>
       </table>
       <h2 className="py-10">
-        Monthly Pension = (Last Basic Salary * Percentage) / 2 + Medical
+        Monthly Pension = (Last Basic Salary * Pension Percentage from above table) / 2 + Medical
         Treatment Fees
       </h2>
       <div className="py-10 bg-[#009688] text-white">
         <p> Your Monthly Pension : {Math.floor(currentpension)}</p>
-        <p>Total Pension From Retirement to Application Date: {Math.floor(totalPension)}</p>
+        {/* <p>
+          Total Pension From Retirement to Application Date:
+          {Math.floor(totalPension)}
+        </p> */}
       </div>
     </div>
   );
