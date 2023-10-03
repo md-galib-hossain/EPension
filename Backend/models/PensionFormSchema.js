@@ -5,9 +5,26 @@ const PensionFormSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
     },
+    profileImage: {
+        type: String,
+        required: [true, "Please Enter Your Image."],
+        trim: true,
+
+    },
+    email: {
+        type: String,
+        trim: true,
+
+    },
     fullName: {
         type: String,
         required: [true, "Please Enter Your Name."],
+        trim: true,
+
+    },
+    Age: {
+        type: Number,
+        required: [true, "Please Enter Your Age."],
         trim: true,
 
     },
@@ -24,7 +41,7 @@ const PensionFormSchema = new mongoose.Schema({
 
     },
     bankAccount: {
-        type: Number,
+        type: String,
         required: [true, "Please Enter Bank Account No."],
         trim: true,
 
@@ -73,7 +90,12 @@ const PensionFormSchema = new mongoose.Schema({
     nidNumber: {
         type: Number,
         default: 0,
-        maxLength: [11, "NID Number can't exceed 11 character."]
+        maxLength: [10, "NID Number can't exceed 10 character."]
+    },
+    contactNumber: {
+        type: Number,
+        default: 0,
+        maxLength: [11, "Contact Number can't exceed 11 character."]
     },
     image: {
         type: String,

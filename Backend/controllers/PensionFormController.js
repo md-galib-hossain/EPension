@@ -4,7 +4,7 @@ const ReportSchema = require("../models/ReportFromPensionholder");
 // creating pension form.
 exports.CreatePensionForm = async (req, res, next) => {
     user = req.user.id
-    const { fullName,fathersName, mothersName,currentAddress,permanentAddress, postalcode, basic_slary, nidNumber, joingDateOffice, retiredDate,bankAccount,jobPost,jobId,jobDepartment } = req.body;
+    const { contactNumber,email,profileImage,fullName,Age,fathersName, mothersName,currentAddress,permanentAddress, postalcode, basic_slary, nidNumber, joingDateOffice, retiredDate,bankAccount,jobPost,jobId,jobDepartment } = req.body;
 
     try {
         // check fathers name and mothers name should be string
@@ -30,7 +30,7 @@ exports.CreatePensionForm = async (req, res, next) => {
                 return res.status(400).json({ success: false, message: 'You already submitted pension form' });
             }
 
-            const pensionform = await PensionForm.create({ user,fullName, fathersName, mothersName, basic_slary, postalcode, nidNumber, joingDateOffice, retiredDate,currentAddress,permanentAddress,bankAccount,jobPost,jobId,jobDepartment })
+            const pensionform = await PensionForm.create({contactNumber,email,profileImage, user, fullName, Age, fathersName, mothersName, basic_slary, postalcode, nidNumber, joingDateOffice, retiredDate,currentAddress,permanentAddress,bankAccount,jobPost,jobId,jobDepartment })
             // console.log("backend------", pensionform);
             // calculate pension with basic salary then update existing pensionform with new pension
             const pension = (basic_slary * 12) / 2 + 1500;
@@ -61,7 +61,7 @@ exports.UpdatePensionForm = async (req, res, next) => {
             });
         }
         // if user update his form make status pending again and rejected_by_role and process_status_by_role empty string
-        await pensiondata.updateOne({ status: 'pending', rejected_by_role: '', rejectionReason: '', process_status_by_role: 'juniorOfficer' });
+        await pensiondata.updateOne({ status: 'pending', rejected_by_role: '', rejectionReason: '', process_status_by_role: 'juniorOfficer',rejectionDate:'', approvalDate:'' });
 
         res.status(200).json({
             success: true,

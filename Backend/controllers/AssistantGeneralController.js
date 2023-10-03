@@ -2,7 +2,6 @@ const PensionForm = require("../models/PensionFormSchema");
 const AssistantGeneral = require("../models/AssistantGeneralSchema");
 
 
-
 // get all pension applications by junior officer and also check if there is any application is expired or not if expired then update the from_expired_out attribute
 exports.getAllPensionApplications = async (req, res, next) => {
     const userID = req.user._id;
@@ -60,7 +59,7 @@ exports.approveRejectPensionApplication = async (req, res, next) => {
             }
         } else if (status === 'rejected') {
             // pensionholder will be notified that his approval has been approved by the assistant general
-            const updated = await PensionForm.findByIdAndUpdate(id, { status: status, process_status_by_role: "", rejected_by_role: role, rejectionDate: new Date() });
+            const updated = await PensionForm.findByIdAndUpdate(id, { status: status, process_status_by_role: "", rejected_by_role: role, rejectionDate: new Date(), approvalDate:""  });
 
             if (rejectionReason) {
                 updated.rejectionReason = rejectionReason;

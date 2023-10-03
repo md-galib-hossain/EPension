@@ -3,6 +3,8 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
+const mongoose = require('mongoose');
+
 
 // internal imports
 const DataBaseConfiguration = require("./config/database");
@@ -11,6 +13,7 @@ const PensionFormRoute = require("./routes/PensionFormRoute");
 const JuniorOfficerRoute = require("./routes/JuniorOfficerRoute");
 const HeadOfficerRoute = require("./routes/HeadOfficerRoute");
 const AssistantGeneral = require("./routes/AssistantGeneralRoute");
+
 
 // config calling.
 const app = express();
@@ -48,6 +51,27 @@ app.use('/', AssistantGeneral);
 app.use('/', JuniorOfficerRoute);
 app.use('/', HeadOfficerRoute);
 app.use('/', userRoute);
+
+
+
+
+// Create an API endpoint to get all data from the "govtdatabase" collection
+app.get('/govtdata', async (req, res) => {
+    try {
+      // If you have a schema, you can use the model to fetch data
+      // const govtData = await GovtData.find({});
+  
+      // If you don't have a schema, you can directly access the collection like this:
+      const govtData = await mongoose.connection.collection('govtdatabase').find({}).toArray();
+  
+      // Send the data as a JSON response
+      res.json(govtData);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
 
 
 // 404 page error handling.

@@ -66,7 +66,7 @@ exports.approveApplication = async (req, res, next) => {
             }
         } else if (status === 'rejected') {
             // Update the status to rejected and set rejectionReason and rejected_by_role
-            const updated = await PensionForm.findByIdAndUpdate(id, { status: status, process_status_by_role: "", rejected_by_role: role, rejectionDate: new Date() });
+            const updated = await PensionForm.findByIdAndUpdate(id, { status: status, process_status_by_role: "", rejected_by_role: role, rejectionDate: new Date(), approvalDate:"" });
 
             // Update rejectionReason if provided
             if (rejectionReason) {
