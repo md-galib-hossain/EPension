@@ -146,7 +146,7 @@ function JuniorOfficer({ role }) {
         query: record.formData,
       }}
       >
-        <ViewPensionForm setOpen={setOpen} open={open} />
+        <ViewPensionForm role={"juniorOfficer"} setOpen={setOpen} open={open} />
       </Link>
 
     </>

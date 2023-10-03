@@ -215,8 +215,16 @@ function PensionHolder() {
         </thead>
         <tbody>
           <tr>
+            <td className="border py-2 px-4">Image</td>
+            <td className="border py-2 px-4 flex items-center justify-center"><img className="w-16 h-16 object-cover rounded-none" src={matchingUser?.profileImage}/></td>
+          </tr>
+          <tr>
             <td className="border py-2 px-4">Name</td>
             <td className="border py-2 px-4">{matchingUser?.fullName}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Age</td>
+            <td className="border py-2 px-4">{matchingUser?.Age}</td>
           </tr>
           <tr>
             <td className="border py-2 px-4">Father's Name</td>
@@ -239,6 +247,14 @@ function PensionHolder() {
           <tr>
             <td className="border py-2 px-4">NID Number</td>
             <td className="border py-2 px-4">{matchingUser?.nidNumber}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Contact Number</td>
+            <td className="border py-2 px-4">{matchingUser?.contactNumber}</td>
+          </tr>
+          <tr>
+            <td className="border py-2 px-4">Email</td>
+            <td className="border py-2 px-4">{matchingUser?.email}</td>
           </tr>
           <tr>
             <td className="border py-2 px-4">Postal Code</td>

@@ -4,7 +4,9 @@ const RejectionDate = ({inputDate}) => {
     const date = new Date(inputDate);
     console.log('input in',inputDate)
     // jodi date nan value ashe tahole ui te dekhabena
-    if (!isNaN(date)) {
+    if (inputDate == null) {
+        return null
+      } else {
         // Extract day, month, and year components
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -19,9 +21,6 @@ const RejectionDate = ({inputDate}) => {
             {formattedDate}
           </div>
         );
-      } else {
-        // Return null if the date is not valid
-        return null;
       }
     };
 

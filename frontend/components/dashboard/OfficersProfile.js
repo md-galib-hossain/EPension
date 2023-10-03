@@ -14,6 +14,7 @@ import RejectionDate from "./RejectionDate";
 import Link from "next/link";
 import ViewPensionForm from "./ViewPensionForm";
 import { useState } from "react";
+import ViewReason from "./ViewReason";
 
 const OfficersProfile = ({
     
@@ -24,6 +25,7 @@ const OfficersProfile = ({
   onAddFlagClick,
 }) => {
     const [open, setOpen] = useState(false);
+    const [openReason, setOpenReason] = useState(false);
 
   const dispatch = useDispatch();
   const { Officers, reports } = useSelector((state) => state.headOfficer);
@@ -156,7 +158,9 @@ const OfficersProfile = ({
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap">
                     <div className="text-sm leading-5 text-gray-900">
-                      {application?.status}
+                      {application?.status == "rejected" ? <div className="flex gap-2">{application?.status} <ViewReason 
+rejected_by_role={application?.rejected_by_role} 
+rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} openReason={openReason} /></div> : application?.status}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap">
@@ -167,7 +171,7 @@ const OfficersProfile = ({
                           query: application,
                         }}
                       >
-                        <ViewPensionForm setOpen={setOpen} open={open} />
+                        <ViewPensionForm role={"headOfOffice"} setOpen={setOpen} open={open} />
                       </Link>
                     </div>
                   </td>

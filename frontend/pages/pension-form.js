@@ -15,6 +15,8 @@ import {
 } from "@/app/feature/pensionData/pensionFormSlice";
 
 export default function PensionForm() {
+
+  const imageHostKey = process.env.NEXT_PUBLIC_Imgbb_Token
   const {Option} = Select
   
   const router = useRouter();
@@ -26,12 +28,15 @@ export default function PensionForm() {
 
   const formikPensionForm = useFormik({
     initialValues: {
+      profileImage: "",
       fullName: "",
+      email: user?.email,
       Age: "",
       fathersName: "",
       mothersName: "",
       currentAddress: "",
       permanentAddress: "",
+      contactNumber: "",
       postalCode: "",
       nidNumber: "",
       retiredAddress: "",
@@ -65,6 +70,8 @@ export default function PensionForm() {
         permanentAddress: yup
         .string()
         .required("Permanent Address is required"),
+        profileImage: yup.string().required("Your Image is required"),
+        contactNumber: yup.string().required("Contact Number is required"),
       postalCode: yup.string().required("Postal Code is required"),
       nidNumber: yup.string().required("NID Number is required"),
       Age: yup.string().required("Age is required"),
@@ -77,19 +84,60 @@ export default function PensionForm() {
       jobDepartment: yup.string().required("Department is required"),
     }),
 
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
 
+
+      // my extra code for img start here
+
+      try {
+        // Check if a new profile image is selected
+        if (values.profileImage && typeof values.profileImage !== 'string') {
+          // Create a new FormData object
+          const formData = new FormData();
+          formData.append('image', values.profileImage);
+
+          // Upload the image to ImgBB
+          const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!imgbbResponse.ok) {
+            throw new Error('Image upload failed');
+          }
+
+          const imgbbData = await imgbbResponse.json();
+          // Update the form values with the ImgBB URL
+          console.log(imgbbData.data.url,"asjdjdgfsdgf")
+          values.profileImage = imgbbData.data.url;
+        }
+        dispatch(createPensionForm(values))
+        .then((res) => {
+          // ...
+        })
+        .catch((err) => {
+          // ...
+        });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+//       // my extra code for img end here
+
+    
       if (_id) {
       
 
         // Update existing form
         const pensionFormData = {
+          email: user?.email,
+          fullName: values.profileImage,
           fullName: values.fullName,
           Age: values.Age,
           fathersName: values.fathersName,
           mothersName: values.mothersName,
           currentAddress: values.currentAddress,
           permanentAddress: values.permanentAddress,
+          contactNumber: values.contactNumber,
           postalcode: values.postalCode,
           nidNumber: values.nidNumber,
           joingDateOffice: values.joinDate,
@@ -138,12 +186,15 @@ export default function PensionForm() {
       } else {
         // Create a new form
         const newPensionFormData = {
+          profileImage: values.profileImage,
           fullName: values.fullName,
+          email: user?.email,
           Age: values.Age,
           fathersName: values.fathersName,
           mothersName: values.mothersName,
           currentAddress: values.currentAddress,
           permanentAddress: values.permanentAddress,
+          contactNumber: values.contactNumber,
           postalcode: values.postalCode,
           nidNumber: values.nidNumber,
           joingDateOffice: values.joinDate,
@@ -199,7 +250,9 @@ export default function PensionForm() {
     if (router.query) {
       formikPensionForm.setValues((prevValues) => ({
         ...prevValues,
+        profileImage: router.query.profileImage || "",
         fullName: router.query.fullName || "",
+        email: user?.email,
         Age: router.query.Age || "",
         fathersName: router.query.fathersName || "",
         mothersName: router.query.mothersName || "",
@@ -247,6 +300,34 @@ export default function PensionForm() {
                   {/* personal information start */}
   <h3 className="text-white text-2xl font-bold">Personal Information</h3>
 <div className="flex flex-wrap gap-4">
+{
+  (!_id) && <div className="mb-4">
+  <label htmlFor="profileImage" className="block text-white text-sm font-bold mb-2">
+    Profile Image*
+  </label>
+  <input
+    type="file"
+    accept="image/*"
+    name="profileImage"
+    id="profileImage"
+    onChange={(event) => {
+      formikPensionForm.setFieldValue("profileImage", event.currentTarget.files[0]);
+    }}
+    onBlur={formikPensionForm.handleBlur}
+    className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 leading-8 transition-colors duration-200 ease-in-out ${
+      formikPensionForm.touched.profileImage && formikPensionForm.errors.profileImage
+        ? "border-red-500"
+        : ""
+    }`}
+  />
+  {formikPensionForm.touched.profileImage && formikPensionForm.errors.profileImage ? (
+    <div className="text-indigo-300 text-sm mt-2">
+      {formikPensionForm.errors.profileImage}
+    </div>
+  ) : null}
+</div>
+}
+
 <div className="mb-4">
                     <label
                       htmlFor="fullName"
@@ -414,6 +495,35 @@ export default function PensionForm() {
                     formikPensionForm.errors.permanentAddress ? (
                       <div className="text-indigo-300 text-sm mt-2">
                         {formikPensionForm.errors.permanentAddress}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className="mb-4">
+                    <label
+                      htmlFor="contactNumber"
+                      className="block text-white text-sm font-bold mb-2"
+                    >
+                      Contact Number*
+                    </label>
+                    <input
+                      type="number"
+                      name="contactNumber"
+                      id="contactNumber"
+                      onChange={formikPensionForm.handleChange}
+                      onBlur={formikPensionForm.handleBlur}
+                      value={formikPensionForm.values.contactNumber}
+                      className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700  py-2 px-3 leading-8 transition-colors duration-200 ease-in-out ${
+                        formikPensionForm.touched.contactNumber &&
+                        formikPensionForm.errors.contactNumber
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                    />
+                    {formikPensionForm.touched.contactNumber &&
+                    formikPensionForm.errors.contactNumber ? (
+                      <div className="text-indigo-300 text-sm mt-2">
+                        {formikPensionForm.errors.contactNumber}
                       </div>
                     ) : null}
                   </div>

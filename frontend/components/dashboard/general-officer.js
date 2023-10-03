@@ -26,9 +26,11 @@ function GeneralOfficer({ role }) {
   // Pension Form Data
   const { allApplications } = useSelector((state) => state.GeneralOfficer);
   const singleUserData = allApplications?.find((user) => user._id === user._id ? user : null);
+   // Find the matching govtData object based on the nid_number condition
+   
 
   // console.log('allApplications : ', allApplications);
-  // console.log('assistanceGeneral : ', assistantGeneral);
+
 
   useEffect(() => {
     dispatch(fetchAllPensions());
@@ -134,7 +136,6 @@ function GeneralOfficer({ role }) {
     {
       title: "Actions",
       render: (record) => {
-
         return (
           <div className="grid grid-cols-1">
             <div>
@@ -173,7 +174,7 @@ function GeneralOfficer({ role }) {
                       query: record.formData,
                     }}
                     >
-                      <ViewPensionForm setOpen={setOpen} open={open} />
+                      <ViewPensionForm govtData={govtData} role={"generalOfficer"} setOpen={setOpen} open={open} />
                     </Link>
 
                   </>
