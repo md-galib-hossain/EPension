@@ -37,14 +37,14 @@ const HeadOfficer = ({ role }) => {
   };
 
   return (
-    <div className='mt-24 ml-10'>
-      <h1 className='text-2xl font-semibold mb-4'>Head Of Office Dashboard </h1>
+    <div className='mt-24'>
+      <h1 className='text-2xl font-semibold ml-6 mb-4'>Head Of Office Dashboard </h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p className='text-red-500'>Error: {error.message}</p>
       ) : (
-        <div className='grid grid-cols-1'>
+        <div className='grid grid-cols-1 justify-center mx-6'>
           <div className=''>
             <ComplainTable reports={reports} handleReportClick={handleReportClick} handleReportDelete={handleReportDelete} />
           </div>

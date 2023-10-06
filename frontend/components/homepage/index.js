@@ -2,15 +2,16 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FloatButton } from "antd";
 import { LiaLanguageSolid } from "react-icons/lia";
-import { blue } from '@ant-design/colors';
-import "./index.css"
+import { blue } from "@ant-design/colors";
+import "./index.css";
 
 const allImages = {
-  imgUrl: "https://i.ibb.co/Pt02JdC/pension-banner.jpg",
+  imgUrl: "https://i.ibb.co/yyb69SQ/Asset-6.png",
 };
 
 function Homepage() {
   const [isEnglish, setIsEnglish] = useState(false);
+  
   const toggleTranslation = () => {
     setIsEnglish(!isEnglish);
   };
@@ -19,7 +20,7 @@ function Homepage() {
       {/* Banner Image */}
       <img
         src={allImages.imgUrl}
-        className="w-full object-fill min-h-[100vh] overflow-hidden"
+        className="w-3/4 mx-auto my-6 object-fill  overflow-hidden"
       />
 
       {/* Service Section Start */}
@@ -37,11 +38,11 @@ function Homepage() {
             )}
             <FloatButton
               onClick={toggleTranslation}
-                description={ isEnglish ? "বাংলা" : "English"}
+              description={isEnglish ? "বাংলা" : "English"}
               shape="square"
               icon={<LiaLanguageSolid />}
-              style={{ width : "4rem", minHeight: "60px" }}
-            // type="red-5"
+              style={{ width: "4rem", minHeight: "60px" }}
+              // type="red-5"
             />
             {isEnglish ? (
               <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900">
@@ -153,10 +154,15 @@ function Homepage() {
                       পেনশন তথ্য সবই কভার করে।
                     </p>
                   )}
-                  <a className="mt-3 inline-flex items-center">
-                    {isEnglish ? " Learn More" : "আরও জানুন"}
-
-                    <svg
+                    <Link
+                      href=
+                        "https://mof.gov.bd/site/notices/abe27e3a-4866-4a0c-9402-a5eb7fe6659f/%E0%A6%B8%E0%A6%B0%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%BF-%E0%A6%95%E0%A6%B0%E0%A7%8D%E0%A6%AE%E0%A6%9A%E0%A6%BE%E0%A6%B0%E0%A7%80%E0%A6%97%E0%A6%A3%E0%A7%87%E0%A6%B0-%E0%A6%AA%E0%A7%87%E0%A6%A8%E0%A6%B6%E0%A6%A8-%E0%A6%B8%E0%A6%B9%E0%A6%9C%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3-%E0%A6%86%E0%A6%A6%E0%A7%87%E0%A6%B6-%E0%A7%A8%E0%A7%A6%E0%A7%A8%E0%A7%A6"
+                      
+                      className="mt-3 inline-flex items-center"
+                      target="_blank"
+                    >
+                      {isEnglish ? " Learn More" : "আরও জানুন"}
+                      <svg
                       fill="none"
                       stroke="currentColor"
                       strokeLinecap="round"
@@ -167,7 +173,8 @@ function Homepage() {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                  </a>
+                    </Link>
+                 
                 </div>
               </div>
             </div>
@@ -240,11 +247,15 @@ function Homepage() {
       {/* Officer Profile Start */}
       <section className="text-gray-600 body-font bg-white">
         <div className="container px-5 py-16 mx-auto">
-          {isEnglish ? <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
-            Officers
-          </h1> : <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
-          অফিসাররা
-          </h1>}
+          {isEnglish ? (
+            <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
+              Officers
+            </h1>
+          ) : (
+            <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
+              অফিসাররা
+            </h1>
+          )}
           <div className="flex flex-wrap -m-4">
             <div className="p-4 md:w-1/2 w-full">
               <div className="h-full bg-gray-100 p-8 rounded">
@@ -330,137 +341,153 @@ function Homepage() {
             />
             <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">
               <div className="lg:w-1/2 px-6">
-                {isEnglish ? <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
-                  ADDRESS
-                </h2> : <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
-                ঠিকানা
-                </h2>}
-                {
-                    isEnglish ? <p className="mt-1">
+                {isEnglish ? (
+                  <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
+                    ADDRESS
+                  </h2>
+                ) : (
+                  <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
+                    ঠিকানা
+                  </h2>
+                )}
+                {isEnglish ? (
+                  <p className="mt-1">
                     Ministry of Finance Building - 6, Floor - 3. Bangladesh
                     Secretariat Dhaka-1000. Bangladesh
-                  </p> : <p className="mt-1">
-                  অর্থ মন্ত্রণালয় ভবন- 6, তলা- 3. বাংলাদেশ সচিবালয় ঢাকা-1000। বাংলাদেশ
-                </p>
-                }
+                  </p>
+                ) : (
+                  <p className="mt-1">
+                    অর্থ মন্ত্রণালয় ভবন- 6, তলা- 3. বাংলাদেশ সচিবালয়
+                    ঢাকা-1000। বাংলাদেশ
+                  </p>
+                )}
               </div>
-             {
-                isEnglish ?  <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
-                <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
-                  EMAIL
-                </h2>
-                <a className="text-indigo-500 leading-relaxed">
-                  example@email.com
-                </a>
-                <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
-                  PHONE
-                </h2>
-                <p className="leading-relaxed">123-456-7890</p>
-              </div> : 
-               <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
-               <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
-               ইমেইল
-               </h2>
-               <a className="text-indigo-500 leading-relaxed">
-                 example@email.com
-               </a>
-               <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
-               ফোন
-               </h2>
-               <p className="leading-relaxed">123-456-7890</p>
-             </div>
-             }
+              {isEnglish ? (
+                <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
+                  <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
+                    EMAIL
+                  </h2>
+                  <a className="text-indigo-500 leading-relaxed">
+                    example@email.com
+                  </a>
+                  <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
+                    PHONE
+                  </h2>
+                  <p className="leading-relaxed">123-456-7890</p>
+                </div>
+              ) : (
+                <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
+                  <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
+                    ইমেইল
+                  </h2>
+                  <a className="text-indigo-500 leading-relaxed">
+                    example@email.com
+                  </a>
+                  <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
+                    ফোন
+                  </h2>
+                  <p className="leading-relaxed">123-456-7890</p>
+                </div>
+              )}
             </div>
           </div>
-          {
-            isEnglish ? <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
-            <div className="relative mb-4">
-              <label htmlFor="name" className="leading-7 text-sm text-gray-600">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
+          {isEnglish ? (
+            <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+              <div className="relative mb-4">
+                <label
+                  htmlFor="name"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              </div>
+              <div className="relative mb-4">
+                <label
+                  htmlFor="email"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              </div>
+              <div className="relative mb-4">
+                <label
+                  htmlFor="message"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  defaultValue={""}
+                />
+              </div>
+              <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                Send
+              </button>
             </div>
-            <div className="relative mb-4">
-              <label
-                htmlFor="email"
-                className="leading-7 text-sm text-gray-600"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
+          ) : (
+            <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+              <div className="relative mb-4">
+                <label
+                  htmlFor="name"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  নাম
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              </div>
+              <div className="relative mb-4">
+                <label
+                  htmlFor="email"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  ইমেইল
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              </div>
+              <div className="relative mb-4">
+                <label
+                  htmlFor="message"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  বার্তা
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  defaultValue={""}
+                />
+              </div>
+              <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                পাঠান
+              </button>
             </div>
-            <div className="relative mb-4">
-              <label
-                htmlFor="message"
-                className="leading-7 text-sm text-gray-600"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                defaultValue={""}
-              />
-            </div>
-            <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-              Send
-            </button>
-          </div> : <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
-            <div className="relative mb-4">
-              <label htmlFor="name" className="leading-7 text-sm text-gray-600">
-              নাম
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
-            </div>
-            <div className="relative mb-4">
-              <label
-                htmlFor="email"
-                className="leading-7 text-sm text-gray-600"
-              >
-                ইমেইল
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
-            </div>
-            <div className="relative mb-4">
-              <label
-                htmlFor="message"
-                className="leading-7 text-sm text-gray-600"
-              >
-                বার্তা
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                defaultValue={""}
-              />
-            </div>
-            <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-            পাঠান
-            </button>
-          </div>
-          }
+          )}
         </div>
       </section>
       {/* Contact Section End */}

@@ -88,7 +88,11 @@ export default function Signup() {
         <Head>
           <title>Sign Up</title>
         </Head>
-        <div className='bg-white flex justify-center items-center lg:pt-32 py-24'>
+        <div className='bg-white flex justify-evenly items-center lg:pt-32 py-24'>
+        <section className=''>
+<img src='https://i.ibb.co/rG4JhRR/Asset-1.png'></img>
+
+        </section>
           <section className=" ">
             <div className="flex flex-col items-center justify-center px-6 md:py-8 mx-auto lg:py-0">
               <div className="w-full  rounded shadow border md:mt-0 xl:p-0 bg-gray-600 border-gray-700">

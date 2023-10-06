@@ -61,7 +61,6 @@ function GeneralOfficer({ role }) {
       .catch((err) => {
         console.error("Error fetching data:", err);
         // Set the error state if there's a problem with the request
-        setError("Error fetching data");
       });
   }, []); // The empty dependency array ensures this effect runs once on component mount
 

@@ -68,9 +68,14 @@ export default function signin() {
       <Head>
         <title>Sign in</title>
       </Head>
-      <div className='bg-white h-screen flex justify-center items-center lg:pt-32'>
+      <div className='bg-white h-screen flex justify-evenly items-center lg:pt-32'>
+        <section className=''>
+<img src='https://i.ibb.co/rG4JhRR/Asset-1.png'></img>
+
+        </section>
         <section className="">
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        
             <div className="w-full rounded shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-500 border-gray-700">
               <div className="p-10 space-y-4 md:space-y-6">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
