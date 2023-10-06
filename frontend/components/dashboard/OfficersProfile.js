@@ -73,8 +73,8 @@ const OfficersProfile = ({
   };
 
   return (
-    <div>
-      <div className="my-10">
+    <>
+      <div className="my-10 overflow-x-auto">
         <h2 className="text-2xl font-semibold mb-4">
           All Pension Applications{" "}
         </h2>
@@ -446,7 +446,7 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 
