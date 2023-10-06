@@ -19,7 +19,7 @@ const ComplainTable = ({ reports, handleReportClick, handleReportDelete }) => {
                 <tbody>
                     {reports.map((complaint) => (
                         <tr key={complaint?._id} className="border-b text-center">
-                            <td className="p-2">{complaint?._id}</td>
+                            <td className="p-2">{complaint?.complain_by}</td>
                             <td className="p-2">{complaint?.fullName}</td>
                             <td className="p-2">{complaint?.complain_title}</td>
                             <td className="p-2">{complaint?.complain_des}</td>

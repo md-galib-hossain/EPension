@@ -67,11 +67,13 @@ const [navUser, setNavuser] = useState("")
       {/* Top Navbar */}
       <nav className="fixed top-0 left-0 right-0 bg-[#009688] py-4 text-white z-10">
         <div className="flex justify-between sm:mx-28 mx-4 ">
-          {
-            navUser === "juniorOfficer" || "assistantGeneral" || "headOficer"? <h3 className="text-2xl font-bold">E-Pension</h3> : <Link href={"/"} className={`flex justify-center items-center logo`}>
-            E-Pension
-          </Link>   
-          }
+        {
+  (navUser === "juniorOfficer" || navUser === "assistantGeneral" || navUser === "headOficer") 
+  ? <h3 className="text-2xl font-bold">E-Pension</h3> 
+  : <Link href={"/"} className={`flex justify-center items-center logo`}>
+      E-Pension
+    </Link>   
+}
          
           <div className="flex justify-between">
             <div className="flex justify-center items-center">

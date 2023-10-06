@@ -146,6 +146,7 @@ function JuniorOfficer({ role }) {
         query: record.formData,
       }}
       >
+        
         <ViewPensionForm role={"juniorOfficer"} setOpen={setOpen} open={open} />
       </Link>
 
@@ -197,21 +198,22 @@ function JuniorOfficer({ role }) {
         </p>
         <p>Account: <span className='bg-green-600 rounded mx-4 py- px-1 text-white text-[15px] uppercase'>{juniorOfficer?.account_status}</span></p>
       </div>
-      <div className="container w-full mx-auto pb-32  py-10">
-        <div className="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
-          <div>
-            {/* <h1 className='py-12 text-gray-700 text-2xl'>Your Total Complains :{` ${matchingData?.complains}`}</h1> */}
-          </div>
-          <h2 className='text-xl'>Pension Holder Form Data:</h2>
-          <Table
-            dataSource={dataSource}
-            columns={columns}
-            pagination={false}
-            rowKey={(record) => record.id}
-            className="hoverable-table"
-          ></Table>
-        </div>
-      </div>
+       {/* new modify start */}
+       <div className="container mx-auto p-4">
+   
+
+   <div className="w-full md:mt-8">
+     <h2 className="text-xl mb-4">Pension Holder Form Data:</h2>
+     <Table
+       dataSource={dataSource}
+       columns={columns}
+       pagination={false}
+       rowKey={(record) => record.id}
+       className="hoverable-table"
+     />
+   </div>
+ </div>
+         {/* new modify end */}
     </>
   )
 }
