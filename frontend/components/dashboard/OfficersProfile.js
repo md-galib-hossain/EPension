@@ -15,6 +15,53 @@ import Link from "next/link";
 import ViewPensionForm from "./ViewPensionForm";
 import { useState } from "react";
 import ViewReason from "./ViewReason";
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+
+
+function countApplicationsByMonth(applications) {
+  const result = [];
+
+  applications.forEach(application => {
+    const createdDate = new Date(application.created);
+    const monthKey = `${createdDate.getFullYear()}-${(createdDate.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}`;
+
+    let existingMonth = result.find(item => item.month === monthKey);
+
+    if (!existingMonth) {
+      existingMonth = {
+        month: monthKey,
+        applications: 0,
+        approved: 0,
+        pending: 0,
+        countExpired: 0,
+        performance: 0,
+      };
+      result.push(existingMonth);
+    }
+
+    // Update total applications count
+    existingMonth.applications += 1;
+
+    // Update status counts
+    if (application.status === 'approved') {
+      existingMonth.approved += 1;
+    } else if (application.status === 'pending') {
+      if (application.from_expired_out.length === 0) {
+        existingMonth.pending += 1;
+      } else {
+        existingMonth.countExpired += 1;
+      }
+    }
+
+    // Calculate performance rate
+    existingMonth.performance = existingMonth.approved / existingMonth.applications;
+  });
+
+  return result;
+}
+
 
 const OfficersProfile = ({
     
@@ -30,6 +77,20 @@ const OfficersProfile = ({
   const dispatch = useDispatch();
   const { Officers, reports } = useSelector((state) => state.headOfficer);
 
+  // created month and count start
+  const [applicationCountByMonth, setApplicationCountByMonth] = useState([]);
+
+  useEffect(() => {
+    // Count applications by month when the 'applications' prop changes
+    const countByMonth = countApplicationsByMonth(applications);
+    setApplicationCountByMonth(countByMonth);
+  }, [applications]);
+
+
+  // Example usage of the application count by month
+  console.log(applicationCountByMonth,"count");
+  // created month and count end
+  
   const handleAssistantGeneralFlagClick = async (id) => {
     try {
       // Pass an object with id and flags
@@ -74,6 +135,48 @@ const OfficersProfile = ({
 
   return (
     <>
+          {/*  this part for the tiny bar chart start */}
+          <div className="my-10 flex flex-col md:flex-row">
+     {/* chart 1 start */}
+     <div className="w-full h-96 my-10">
+     <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
+
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={applicationCountByMonth}>
+            <XAxis dataKey="month" />
+            <YAxis  />
+            <Tooltip />
+            <Bar dataKey="applications" fill="#0E364A" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      {/* chart 1 end */}
+      <div className="w-full h-96 my-10">
+      <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
+
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={applicationCountByMonth}>
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="applications" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="w-full h-96 my-10">
+      <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
+
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={applicationCountByMonth}>
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="applications" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+            {/*  this part for the tiny bar chart end */}
       <div className="my-10 overflow-x-auto">
         <h2 className="text-2xl font-semibold mb-4">
           All Pension Applications{" "}
@@ -206,7 +309,7 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
           </tbody>
         </table>
       </div>
-      <div className="my-10">
+      <div className="my-10 overflow-x-auto">
         <h2 className="text-2xl font-semibold mb-4">Assistant Generals</h2>
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
@@ -327,7 +430,7 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
           </tbody>
         </table>
       </div>
-      <div className="my-10">
+      <div className="my-10 overflow-x-auto">
         <h2 className="text-2xl font-semibold mb-4">Junior Officers</h2>
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
@@ -446,6 +549,8 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
           </tbody>
         </table>
       </div>
+
+
     </>
   );
 };
