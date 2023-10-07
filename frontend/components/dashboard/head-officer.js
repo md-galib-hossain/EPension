@@ -16,7 +16,6 @@ const HeadOfficer = ({ role }) => {
   const assistantGeneral = Officers.assistantGeneral;
   const juniorOfficer = Officers.juniorOfficer;
 
-  console.log("applications -------- : ", applications);
 
 
   useEffect(() => {

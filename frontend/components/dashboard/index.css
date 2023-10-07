@@ -5,3 +5,12 @@
 .anticon svg{
     color: #22445D;
 }
+
+.recharts-legend-wrapper {
+    position: absolute !important;
+    width: 480px !important;
+    height: auto !important;
+    left: 5px !important;
+    bottom: 50px !important; /* Adjust the margin bottom as per your design */
+    /* Add any additional styles you need */
+}

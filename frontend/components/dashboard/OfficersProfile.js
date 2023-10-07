@@ -16,6 +16,7 @@ import ViewPensionForm from "./ViewPensionForm";
 import { useState } from "react";
 import ViewReason from "./ViewReason";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import PiChart from "./PiChart";
 
 
 function countApplicationsByMonth(applications) {
@@ -151,9 +152,12 @@ const OfficersProfile = ({
         </ResponsiveContainer>
       </div>
       {/* chart 1 end */}
+      {/* chart 2 start */}
+    <PiChart applicationCountByMonth={applicationCountByMonth}></PiChart>
+{/* chart 2 end */}
+{/* chart 3 start */}
       <div className="w-full h-96 my-10">
       <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
-
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={applicationCountByMonth}>
             <XAxis dataKey="month" />
@@ -163,18 +167,7 @@ const OfficersProfile = ({
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="w-full h-96 my-10">
-      <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
-
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={applicationCountByMonth}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="applications" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      {/* chart 3 end */}
     </div>
             {/*  this part for the tiny bar chart end */}
       <div className="my-10 overflow-x-auto">
