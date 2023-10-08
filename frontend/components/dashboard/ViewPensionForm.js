@@ -208,7 +208,7 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
                           <div className="flex items-center justify-center">
                             <img
                               className="w-20 h-20 object-cover rounded-none"
-                              src={matchingGovtData?.profileImage}
+                              src={matchingGovtData.profileImage}
                             />
                           </div>
                         </label>

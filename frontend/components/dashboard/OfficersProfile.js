@@ -4,7 +4,7 @@ import {
   AddJuniorOfficerFlag,
   accountStatusUpdate,
   decreaseAssistantGeneralFlag,
-  decreaseJuniorOfficerFlag,
+  decreaseJuniorOfficerFlag,updatePensionFormExpiry
 } from "@/app/feature/headOfficer/headOfficerSlice";
 import React, { useEffect } from "react";
 import DelayTime from "./DelayTime";
@@ -18,6 +18,8 @@ import ViewReason from "./ViewReason";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import PiChart from "./PiChart";
 import PerformanceChart from "./PerformanceChart";
+import axios from "axios";
+import { Button } from "antd";
 
 
 function countApplicationsByMonth(applications) {
@@ -135,13 +137,20 @@ const OfficersProfile = ({
     }
   };
 
+  const handleRemoveExpired = (id)=>{
+    dispatch(updatePensionFormExpiry( id ));
+
+    // window.location.reload();
+  };
+
+
   return (
     <>
           {/*  this part for the tiny bar chart start */}
           <div className="my-10 flex flex-col md:flex-row">
      {/* chart 1 start */}
      <div className="w-full h-96 my-10">
-     <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
+     <h2 className="text-2xl mb-4">Monthly Applications Bar Chart</h2>
 
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={applicationCountByMonth}>
@@ -194,6 +203,9 @@ const OfficersProfile = ({
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Waiting for Days
+              </th>
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Is Expired
               </th>
               {/* <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Action
@@ -270,7 +282,19 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
                         time={application?.created}
                       ></DelayTime>
                     }
+                  
                   </td>
+                  <td className="px-4 py-2 whitespace-no-wrap" >
+                   {
+                      application.from_expired_out.length > 0 &&  <Button
+                      onClick={() => handleRemoveExpired(application?._id)}
+                      className="bg-red-500 hover:bg-red-700 text-white rounded"
+                    >
+                      Remove Expired
+                    </Button>
+                    }
+
+                   </td>
                   {/* GB */}
                   {/* <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="text-sm leading-5 text-gray-900">

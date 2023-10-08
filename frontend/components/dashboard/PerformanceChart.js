@@ -24,7 +24,7 @@ export default function PerformanceChart({ applicationCountByMonth }) {
 
   return (
     <div className="w-full h-96 my-10">
-    <h2 className="text-2xl font-bold mb-4">PerformanceChart</h2>
+    <h2 className="text-2xl mb-4">Performance Line Chart</h2>
     <ResponsiveContainer width="100%" height="100%">
         <LineChart
          

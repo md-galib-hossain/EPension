@@ -39,10 +39,11 @@ export default function PiChart({ applicationCountByMonth }) {
 
   return (
     <div className="w-full h-96 my-10">
-      <h2 className="text-2xl font-bold mb-4">Monthly Status</h2>
+      <h2 className="text-2xl mb-4">Monthly Status Pie Chart</h2>
       <select
         value={selectedMonth}
         onChange={(e) => setSelectedMonth(e.target.value)}
+        
       >
         {months.map((month) => (
           <option key={month} value={month}>

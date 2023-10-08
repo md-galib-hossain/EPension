@@ -19,7 +19,6 @@ export const accountStatusUpdate = createAsyncThunk(
     'headOfficer/accountStatusUpdate',
     async ({ id, Status }) => {
 
-        console.log("accountStatusUpdate: ", id, Status);
 
         const accountStatus = await axios.put(
             `http://localhost:5000/assistantGeneral/account/${id}`, { account_status: Status }, {
@@ -28,7 +27,6 @@ export const accountStatusUpdate = createAsyncThunk(
             },
         });
 
-        console.log("accountStatus: ", accountStatus.data);
 
         return accountStatus.data;
     }
@@ -92,6 +90,33 @@ export const AddAssistantGeneralFlag = createAsyncThunk(
         return flagResponse.data.flagsUpdate;
     }
 );
+const currentDate = new Date();
+
+// pension expiry status update
+export const updatePensionFormExpiry = createAsyncThunk(
+    'headOfficer/updatePensionFormExpiry',
+    async (id) => {
+        
+            const response = await axios.put(`http://localhost:5000/pension/form/${id}`,{
+                status: 'pending',
+                rejected_by_role: '',
+                rejectionReason: '',
+                process_status_by_role: 'juniorOfficer',
+                rejectionDate: '',
+                approvalDate: '',
+                created: currentDate,
+                from_expired_out: [] }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+            return response.data;
+       
+    }
+);
+
+
+
 
 export const fetchReportById = createAsyncThunk(
     'headOfficer/fetchReportById',
@@ -235,6 +260,14 @@ const headOfficerSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
+           .addCase(updatePensionFormExpiry.fulfilled, (state, action) => {
+                // Handle the fulfilled action if needed
+            })
+            .addCase(updatePensionFormExpiry.rejected, (state, action) => {
+                // Handle the rejected action, possibly show an error message
+                console.error('Update Pension Form Expiry failed:', action.payload);
+            })
+            
             // get all reports of pensionholder
             .addCase(fetchAllReports.pending, (state) => {
                 state.loading = true;

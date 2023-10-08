@@ -37,7 +37,7 @@ const HeadOfficer = ({ role }) => {
 
   return (
     <div className='mt-24'>
-      <h1 className='text-2xl font-semibold ml-6 mb-4 text-center'>Head Of Office Dashboard </h1>
+      <h1 className='text-2xl font-semibold ml-6 text-center'>Head Of Office Dashboard </h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
