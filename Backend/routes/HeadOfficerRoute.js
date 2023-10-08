@@ -1,5 +1,5 @@
 const express = require("express");
-const { GiveflagToJuniorOfficer, GiveflagToAssistantGeneral, GetAllReports, GetSingleReport, GetAllPensionForm, GetAllOfficers, DeactiveJuniorOfficerAndAssistantGeneral, getAllPensionApplicationsExpired } = require("../controllers/HeadOfficerController");
+const { GiveflagToJuniorOfficer, GiveflagToAssistantGeneral,RemoveExpired, GetAllReports, GetSingleReport, GetAllPensionForm, GetAllOfficers, DeactiveJuniorOfficerAndAssistantGeneral, getAllPensionApplicationsExpired } = require("../controllers/HeadOfficerController");
 const { authorizeRoles, isAuthenticated } = require("../middlewares/auth");
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.get("/allOfficers", isAuthenticated, authorizeRoles('headOficer'), GetAll
 router.get("/allexpiredApplications", isAuthenticated, authorizeRoles('headOficer'), getAllPensionApplicationsExpired);
 
 // get all reports
+router.put("/pension/form/:id", RemoveExpired);
 router.get("/headofficer/allreports", isAuthenticated, authorizeRoles('headOficer'), GetAllReports);
 router.get("/report/:id", isAuthenticated, authorizeRoles('headOficer'), GetSingleReport);
 

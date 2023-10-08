@@ -51,9 +51,10 @@ exports.CreatePensionForm = async (req, res, next) => {
 }
 
 exports.UpdatePensionForm = async (req, res, next) => {
+    const currentDate = new Date();
+
     try {
         const pensiondata = await PensionForm.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
         if (!pensiondata) {
             res.status(404).send({
                 success: false,
@@ -61,7 +62,7 @@ exports.UpdatePensionForm = async (req, res, next) => {
             });
         }
         // if user update his form make status pending again and rejected_by_role and process_status_by_role empty string
-        await pensiondata.updateOne({ status: 'pending', rejected_by_role: '', rejectionReason: '', process_status_by_role: 'juniorOfficer',rejectionDate:'', approvalDate:'' });
+        await pensiondata.updateOne({ status: 'pending', rejected_by_role: '', rejectionReason: '', process_status_by_role: 'juniorOfficer',rejectionDate:'', approvalDate:'', created: currentDate });
 
         res.status(200).json({
             success: true,
@@ -77,6 +78,8 @@ exports.UpdatePensionForm = async (req, res, next) => {
         });
     }
 };
+
+
 
 // Delete pension form.
 exports.DeletePensionForm = async (req, res, next) => {

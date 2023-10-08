@@ -6,7 +6,7 @@ const { isAuthenticated, authorizeRoles } = require("../middlewares/auth");
 const { GetAllReports, GetSingleReport } = require("../controllers/HeadOfficerController");
 
 router.post("/pension/form", isAuthenticated, authorizeRoles('pensionholder'), CreatePensionForm);
-router.put("/pension/form/:id", isAuthenticated, authorizeRoles('pensionholder'), UpdatePensionForm);
+router.put("/pension/form/:id", isAuthenticated, authorizeRoles('pensionholder','headOficer'), UpdatePensionForm);
 router.delete("/pension/form/:id", isAuthenticated, authorizeRoles('pensionholder'), DeletePensionForm);
 
 router.get("/pension/form/:id", isAuthenticated, authorizeRoles('headOficer', 'juniorOfficer', 'assistantGeneral'), GetSinglePensionForm);

@@ -7,10 +7,10 @@ const PensionFormSchema = new mongoose.Schema({
     },
     profileImage: {
         type: String,
-        required: [true, "Please Enter Your Image."],
-        trim: true,
+        default: 'https://i.ibb.co/cXQY2Cv/pngtree-character-default-avatar-image-2237203.jpg', // Provide a default value
+      },
 
-    },
+  
     email: {
         type: String,
         trim: true,

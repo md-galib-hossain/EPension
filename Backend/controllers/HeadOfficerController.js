@@ -87,6 +87,8 @@ exports.GiveflagToJuniorOfficer = async (req, res) => {
 };
 
 
+
+
 // flags for assistantGeneral
 exports.GiveflagToAssistantGeneral = async (req, res) => {
     try {
@@ -144,6 +146,42 @@ exports.DeactiveJuniorOfficerAndAssistantGeneral = async (req, res) => {
             const updatedAccountStatus = await AssistantGeneral.findByIdAndUpdate(id, { account_status: account_status });
             return res.status(200).json({ success: true, message: 'assistantGeneral account status updated', updatedAccountStatus: updatedAccountStatus });
         }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+exports.RemoveExpired = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const { status,
+        rejected_by_role,
+        rejectionReason,
+        process_status_by_role,
+        rejectionDate,
+        approvalDate,
+        created,
+        from_expired_out} = req.body;
+
+        const pensionForm = await PensionForm.findById(id);
+
+     
+
+        if (pensionForm) {
+            const updatedPensionForm = await pensionForm.findByIdAndUpdate(id, {status : status,
+                rejected_by_role : rejected_by_role,
+                rejectionReason : rejectionReason,
+                process_status_by_role : process_status_by_role,
+                rejectionDate : rejectionDate,
+                approvalDate : approvalDate,
+                created : created,
+                from_expired_out : from_expired_out});
+            return res.status(200).json({ success: true, message: 'Form status updated', updatedPensionForm: updatedPensionForm });
+        }
+
 
     } catch (error) {
         res.status(500).json({ message: error.message });
