@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pie, PieChart, ResponsiveContainer, Cell, Legend } from 'recharts';
+import { Pie, PieChart, ResponsiveContainer, Cell, Legend, Tooltip } from 'recharts';
 
 const COLORS = [ '#00C49F', '#0088FE', '#0E364A'];
 
@@ -33,13 +33,13 @@ export default function PiChart({ applicationCountByMonth }) {
     ? [
         { name: 'Approved', value: filteredData.approved },
         { name: 'Pending', value: filteredData.pending },
-        { name: 'Count Expired', value: filteredData.countExpired },
+        { name: 'Expired', value: filteredData.Expired },
       ]
     : [];
 
   return (
     <div className="w-full h-96 my-10">
-      <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
+      <h2 className="text-2xl font-bold mb-4">Monthly Status</h2>
       <select
         value={selectedMonth}
         onChange={(e) => setSelectedMonth(e.target.value)}
@@ -67,6 +67,7 @@ export default function PiChart({ applicationCountByMonth }) {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
+          <Tooltip />
           <Legend />
         </PieChart>
       </ResponsiveContainer>

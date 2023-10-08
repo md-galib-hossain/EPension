@@ -17,6 +17,7 @@ import { useState } from "react";
 import ViewReason from "./ViewReason";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import PiChart from "./PiChart";
+import PerformanceChart from "./PerformanceChart";
 
 
 function countApplicationsByMonth(applications) {
@@ -36,7 +37,7 @@ function countApplicationsByMonth(applications) {
         applications: 0,
         approved: 0,
         pending: 0,
-        countExpired: 0,
+        Expired: 0,
         performance: 0,
       };
       result.push(existingMonth);
@@ -52,7 +53,7 @@ function countApplicationsByMonth(applications) {
       if (application.from_expired_out.length === 0) {
         existingMonth.pending += 1;
       } else {
-        existingMonth.countExpired += 1;
+        existingMonth.Expired += 1;
       }
     }
 
@@ -156,17 +157,7 @@ const OfficersProfile = ({
     <PiChart applicationCountByMonth={applicationCountByMonth}></PiChart>
 {/* chart 2 end */}
 {/* chart 3 start */}
-      <div className="w-full h-96 my-10">
-      <h2 className="text-2xl font-bold mb-4">Total Applications</h2>
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={applicationCountByMonth}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="applications" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+<PerformanceChart applicationCountByMonth={applicationCountByMonth}></PerformanceChart>
       {/* chart 3 end */}
     </div>
             {/*  this part for the tiny bar chart end */}
