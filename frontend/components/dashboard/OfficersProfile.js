@@ -6,6 +6,8 @@ import {
   decreaseAssistantGeneralFlag,
   decreaseJuniorOfficerFlag,updatePensionFormExpiry
 } from "@/app/feature/headOfficer/headOfficerSlice";
+import { Pagination } from 'antd';
+
 import React, { useEffect } from "react";
 import DelayTime from "./DelayTime";
 import SubmissionDate from "./SubmissionDate";
@@ -137,11 +139,45 @@ const OfficersProfile = ({
     }
   };
 
+  // expired status change starts
   const handleRemoveExpired = (id)=>{
     dispatch(updatePensionFormExpiry( id ));
-
-    // window.location.reload();
+    window.location.reload();
   };
+  // expired status change ends
+
+// pagination starts
+const [currentPage, setCurrentPage] = useState(1);
+const [isFilterActive, setIsFilterActive] = useState(false);
+
+  const itemsPerPage = 4;
+
+   // Calculate the total number of pages
+   const totalItems = isFilterActive
+   ? applications?.filter(application => application.from_expired_out.length > 0).length
+   : applications?.length || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // Set the default current page to be the last page
+  useEffect(() => {
+    setCurrentPage(totalPages);
+  }, [totalPages]);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedApplications = isFilterActive
+    ? applications?.filter(application => application.from_expired_out.length > 0).slice(startIndex, endIndex)
+    : applications?.slice(startIndex, endIndex);
+
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const handleFilterToggle = () => {
+    setIsFilterActive(!isFilterActive);
+  };
+
+// pagination ends
 
 
   return (
@@ -174,7 +210,10 @@ const OfficersProfile = ({
         <h2 className="text-2xl font-semibold mb-4">
           All Pension Applications{" "}
         </h2>
-        <table className="min-w-full divide-y divide-gray-200">
+        <div className="h-80">
+        <table className="min-w-full divide-y divide-gray-200" scroll={{ y: 400 }}>
+   
+
           <thead>
             <tr>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -213,7 +252,7 @@ const OfficersProfile = ({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {applications?.map((application) => (
+            {displayedApplications?.map((application) => (
               <>
                 <tr key={applications?._id}>
                   <td className="px-6 py-4 whitespace-no-wrap">
@@ -286,12 +325,12 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
                   </td>
                   <td className="px-4 py-2 whitespace-no-wrap" >
                    {
-                      application.from_expired_out.length > 0 &&  <Button
+                      application.from_expired_out.length > 0 ?  <Button
                       onClick={() => handleRemoveExpired(application?._id)}
                       className="bg-red-500 hover:bg-red-700 text-white rounded"
                     >
                       Remove Expired
-                    </Button>
+                    </Button> : <div className="text-sm leading-5 text-gray-900">Not Expired</div>
                     }
 
                    </td>
@@ -316,6 +355,33 @@ rejectionReason={application?.rejectionReason} setOpenReason={setOpenReason} ope
             ))}
           </tbody>
         </table>
+        </div>
+        <div className="flex ">
+       {/* filter checkbox start */}
+       <div className="m-6 justify-start">
+        <label className="inline-flex items-center">
+          <input
+            type="checkbox"
+            className="form-checkbox h-5 w-5 text-blue-500"
+            checked={isFilterActive}
+            onChange={handleFilterToggle}
+          />
+          <span className="ml-2 text-gray-700">Show only expired applications</span>
+        </label>
+      </div>
+                {/* filter checkbox start */}
+<div className="m-6 ml-auto">
+        <Pagination
+          defaultCurrent={1}
+          current={currentPage}
+          total={totalItems}
+          pageSize={itemsPerPage}
+          onChange={handlePageChange}
+        />
+        </div>
+        </div>
+
+     
       </div>
       <div className="my-10 overflow-x-auto">
         <h2 className="text-2xl font-semibold mb-4">Assistant Generals</h2>

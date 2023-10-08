@@ -3,7 +3,7 @@ import React from 'react';
 const ComplainTable = ({ reports, handleReportClick, handleReportDelete }) => {
     return (
         <div className="overflow-x-auto">
-            <h2 className='text-xl my-4'>All Reports</h2>
+            <h2 className='text-2xl font-semibold mb-4'>All Reports</h2>
             <table className="min-w-full bg-white border border-gray-200">
                 <thead>
                     <tr className="bg-gray-100">
