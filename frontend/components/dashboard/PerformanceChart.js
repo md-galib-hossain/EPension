@@ -4,7 +4,7 @@ import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, ResponsiveCont
 export default function PerformanceChart({ applicationCountByMonth }) {
     const CustomizedDot = (props) => {
         const { cx, cy, stroke, payload, value } = props;
-      
+      // threshold for performance is 0.7
         if (value > 0.7) {
           return (
             <svg x={cx - 10} y={cy - 10} width={20} height={20} fill="#00C49F" viewBox="0 0 1024 1024">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pie, PieChart, ResponsiveContainer, Cell, Legend, Tooltip } from 'recharts';
 
-const COLORS = [ '#00C49F', '#0088FE', '#0E364A'];
+const COLORS = [ '#00C49F', '#0088FE', '#0E364A', '#D11E2B'];
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -14,7 +14,6 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     </text>
   );
 };
-
 export default function PiChart({ applicationCountByMonth }) {
   const [selectedMonth, setSelectedMonth] = useState("");
 
@@ -34,8 +33,10 @@ export default function PiChart({ applicationCountByMonth }) {
         { name: 'Approved', value: filteredData.approved },
         { name: 'Pending', value: filteredData.pending },
         { name: 'Expired', value: filteredData.Expired },
+        { name: 'Rejected', value: filteredData.rejected }
       ]
     : [];
+    console.log(applicationCountByMonth)
 
   return (
     <div className="w-full h-96 my-10">
