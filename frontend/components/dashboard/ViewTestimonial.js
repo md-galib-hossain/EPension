@@ -1,23 +1,25 @@
-import React from 'react'
+import React from 'react';
 import { FileTextOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-export default function ViewTestimonial({setOpen, open}) {
-    
+
+export default function ViewTestimonial({ setTestimonialOpen, testimonialOpen }) {
+
   const closeModal = () => {
-    setOpen(false);
+    setTestimonialOpen(false);
   };
   const router = useRouter();
-  const singleUserData = router.query;  
+  const singleUserData = router.query;
+
   return (
     <div>
       {/* <!-- Modal toggle --> */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => setTestimonialOpen(!testimonialOpen)}
         data-modal-target="authentication-modal"
         data-modal-toggle="authentication-modal"
         type="button"
       >
-        <FileTextOutlined  style={{ fontSize: "1.5rem" }}/>
+        <FileTextOutlined style={{ fontSize: "1.5rem" }} />
       </button>
 
       {/* <!-- Main modal --> */}
@@ -25,16 +27,15 @@ export default function ViewTestimonial({setOpen, open}) {
         id="authentication-modal"
         tabIndex="-1"
         className={`${
-          open ? "block bg-[#009688]" : "hidden"
-        } fixed top-30 z-50 w-full p-4 md:inset-0 max-h-full`}
-        // h-[calc(100%-1rem)]
-        aria-hidden={!open}
+          testimonialOpen ? "block bg-[#009688]" : "hidden"
+          } fixed top-30 z-50 w-full p-4 md:inset-0 max-h-full`}
+        aria-hidden={!testimonialOpen}
       >
         <div
           className="absolute w-full max-w-2xl max-h-full"
-             style={{
-            top:"10%",
-            left:"30%",
+          style={{
+            top: "10%",
+            left: "30%",
           }}
         >
           {/* <!-- Modal content --> */}
@@ -47,7 +48,7 @@ export default function ViewTestimonial({setOpen, open}) {
             >
               <svg
                 className="w-3 h-3"
-                aria-hidden={!open}
+                aria-hidden={!testimonialOpen}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 14 14"
@@ -62,12 +63,14 @@ export default function ViewTestimonial({setOpen, open}) {
               </svg>
               <span className="sr-only">Close modal</span>
             </button>
-{/*  */}
 
-<p>{singleUserData?.testimonialImage}</p>
-                    </div>
-                    </div>
-                    </div>
-</div>
+            <div className="flex justify-center items-center p-4">
+              <img src={singleUserData?.testimonialImage} />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

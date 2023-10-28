@@ -133,7 +133,7 @@ function GeneralOfficer({ role }) {
     { title: "Process Status", dataIndex: `${"rejected_by_role" !== "" ? "process_status_by_role" : ""}` },
 
     {
-      title: "Actions",
+      title: <div style={{ textAlign: "center" }}>Actions</div>,
       render: (record) => {
         return (
           <div className="grid grid-cols-1">
@@ -141,12 +141,18 @@ function GeneralOfficer({ role }) {
             <div>
          
               <div className='flex gap-10 items-center'>
-             
+              <Link href={{
+                      pathname: '/dashboard',
+                      query: record.formData,
+                    }}
+                    >
+                      <ViewPensionForm govtData={govtData} role={"generalOfficer"} setOpen={setOpen} open={open} />
+                    </Link>
                 {
                   // status.id === record.id && 
                   <select value={status.id === record.id ? status.status : null} onChange={(e) => setStatus({ status: e.target.value, id: record.id })} className='p-2 bg-gray-100 border-gray-300'>
-                    <option value="approved">Approved</option>
-                    <option value="rejected">Rejected</option>
+                    <option value="approved">Approve</option>
+                    <option value="rejected">Reject</option>
                   </select>
                 }
                 {status.status === 'rejected' && status.id === record.id ? (
@@ -171,13 +177,7 @@ function GeneralOfficer({ role }) {
                     >
                       <CheckOutlined /> Submit
                     </button>
-                    <Link href={{
-                      pathname: '/dashboard',
-                      query: record.formData,
-                    }}
-                    >
-                      <ViewPensionForm govtData={govtData} role={"generalOfficer"} setOpen={setOpen} open={open} />
-                    </Link>
+                    
 
                   </>
                 ) : assistantGeneral?.account_status === 'deactive' || record?.isexpired === "Avaiable" ? (
@@ -194,7 +194,6 @@ function GeneralOfficer({ role }) {
         );
       },
     },
-
     { title: "Appliction Expired date", dataIndex: `${"isexpired"}` },
   ];
   return (

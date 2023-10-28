@@ -40,6 +40,7 @@ function countApplicationsByMonth(applications) {
         month: monthKey,
         applications: 0,
         approved: 0,
+        rejected: 0, // Add rejected count
         pending: 0,
         Expired: 0,
         performance: 0,
@@ -53,6 +54,8 @@ function countApplicationsByMonth(applications) {
     // Update status counts
     if (application.status === 'approved') {
       existingMonth.approved += 1;
+    } else if (application.status === 'rejected') {
+      existingMonth.rejected += 1;
     } else if (application.status === 'pending') {
       if (application.from_expired_out.length === 0) {
         existingMonth.pending += 1;
@@ -62,10 +65,10 @@ function countApplicationsByMonth(applications) {
     }
 
     // Calculate performance rate
-    existingMonth.performance = existingMonth.approved / existingMonth.applications;
+    existingMonth.performance = (existingMonth.approved + existingMonth.rejected) / existingMonth.applications;
   });
 
-  return result;
+return result;
 }
 
 
