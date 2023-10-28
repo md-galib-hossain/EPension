@@ -29,6 +29,7 @@ export default function PensionForm() {
   const formikPensionForm = useFormik({
     initialValues: {
       profileImage: "",
+      testimonialImage: "",
       fullName: "",
       email: user?.email,
       Age: "",
@@ -71,6 +72,7 @@ export default function PensionForm() {
         .string()
         .required("Permanent Address is required"),
         profileImage: yup.string().required("Your Image is required"),
+        testimonialImage: yup.string().required("Testimonial Image is required"),
         contactNumber: yup.string().required("Contact Number is required"),
       postalCode: yup.string().required("Postal Code is required"),
       nidNumber: yup.string().required("NID Number is required"),
@@ -90,6 +92,8 @@ export default function PensionForm() {
       // my extra code for img start here
 
       try {
+                // profile image upload start
+
         // Check if a new profile image is selected
         if (values.profileImage && typeof values.profileImage !== 'string') {
           // Create a new FormData object
@@ -111,6 +115,30 @@ export default function PensionForm() {
           console.log(imgbbData.data.url,"asjdjdgfsdgf")
           values.profileImage = imgbbData.data.url;
         }
+        // profile image upload end
+// testimonial image upload start
+         // Check if a new testimonial image is selected
+    if (values.testimonialImage && typeof values.testimonialImage !== 'string') {
+      // Create a new FormData object
+      const formDataTestimonial = new FormData();
+      formDataTestimonial.append('image', values.testimonialImage);
+
+      // Upload the testimonial image to ImgBB
+      const imgbbResponseTestimonial = await fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`, {
+        method: 'POST',
+        body: formDataTestimonial,
+      });
+
+      if (!imgbbResponseTestimonial.ok) {
+        throw new Error('Testimonial Image upload failed');
+      }
+
+      const imgbbDataTestimonial = await imgbbResponseTestimonial.json();
+      // Update the form values with the ImgBB URL for testimonialImage
+      values.testimonialImage = imgbbDataTestimonial.data.url;
+    }
+// testimonial image upload end
+
         dispatch(createPensionForm(values))
         .then((res) => {
           // ...
@@ -130,7 +158,8 @@ export default function PensionForm() {
         // Update existing form
         const pensionFormData = {
           email: user?.email,
-          fullName: values.profileImage,
+          profileImage: values.profileImage,
+          testimonialImage: values.profileImage,
           fullName: values.fullName,
           Age: values.Age,
           fathersName: values.fathersName,
@@ -187,6 +216,7 @@ export default function PensionForm() {
         // Create a new form
         const newPensionFormData = {
           profileImage: values.profileImage,
+          testimonialImage: values.testimonialImage,
           fullName: values.fullName,
           email: user?.email,
           Age: values.Age,
@@ -251,6 +281,7 @@ export default function PensionForm() {
       formikPensionForm.setValues((prevValues) => ({
         ...prevValues,
         profileImage: router.query.profileImage || "",
+        testimonialImage: router.query.testimonialImage || "",
         fullName: router.query.fullName || "",
         email: user?.email,
         Age: router.query.Age || "",
@@ -303,7 +334,7 @@ export default function PensionForm() {
 {
   (!_id) && <div className="mb-4">
   <label htmlFor="profileImage" className="block text-white text-sm font-bold mb-2">
-    Profile Image*
+    Pensioneer Image*
   </label>
   <input
     type="file"
@@ -327,6 +358,7 @@ export default function PensionForm() {
   ) : null}
 </div>
 }
+
 
 <div className="mb-4">
                     <label
@@ -593,6 +625,36 @@ export default function PensionForm() {
                                     <hr/>
                                     <h3 className="text-white text-2xl font-bold">Job Information</h3>
                                     <div className="flex flex-wrap gap-4">
+
+{/* testimonial image start */}
+{
+  (!_id) && <div className="mb-4">
+  <label htmlFor="testimonialImage" className="block text-white text-sm font-bold mb-2">
+    Testimonial Image*
+  </label>
+  <input
+    type="file"
+    accept="image/*"
+    name="testimonialImage"
+    id="testimonialImage"
+    onChange={(event) => {
+      formikPensionForm.setFieldValue("testimonialImage", event.currentTarget.files[0]);
+    }}
+    onBlur={formikPensionForm.handleBlur}
+    className={`w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-700 leading-8 transition-colors duration-200 ease-in-out ${
+      formikPensionForm.touched.testimonialImage && formikPensionForm.errors.testimonialImage
+        ? "border-red-500"
+        : ""
+    }`}
+  />
+  {formikPensionForm.touched.testimonialImage && formikPensionForm.errors.testimonialImage ? (
+    <div className="text-indigo-300 text-sm mt-2">
+      {formikPensionForm.errors.testimonialImage}
+    </div>
+  ) : null}
+</div>
+}
+{/* testimonial image end */}
 
                                     <div className="mb-4">
                     <label

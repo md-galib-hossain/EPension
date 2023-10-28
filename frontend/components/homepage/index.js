@@ -11,9 +11,18 @@ const allImages = {
 
 function Homepage() {
   const [isEnglish, setIsEnglish] = useState(false);
-  
+
   const toggleTranslation = () => {
     setIsEnglish(!isEnglish);
+  };
+  const handleSubmit = () => {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    const mailtoLink = `mailto:mdgalib23@gmail.com?subject=New Form Submission&body=Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
+
+    window.location.href = mailtoLink;
   };
   const renderData = (
     <>
@@ -132,7 +141,7 @@ function Homepage() {
                   </div>
                   {isEnglish ? (
                     <h2 className="text-white text-lg title-font font-medium">
-                      Pension Informtion
+                      Govt official pension informtion
                     </h2>
                   ) : (
                     <h2 className="text-white text-lg title-font font-medium">
@@ -154,15 +163,13 @@ function Homepage() {
                       পেনশন তথ্য সবই কভার করে।
                     </p>
                   )}
-                    <Link
-                      href=
-                        "https://mof.gov.bd/site/notices/abe27e3a-4866-4a0c-9402-a5eb7fe6659f/%E0%A6%B8%E0%A6%B0%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%BF-%E0%A6%95%E0%A6%B0%E0%A7%8D%E0%A6%AE%E0%A6%9A%E0%A6%BE%E0%A6%B0%E0%A7%80%E0%A6%97%E0%A6%A3%E0%A7%87%E0%A6%B0-%E0%A6%AA%E0%A7%87%E0%A6%A8%E0%A6%B6%E0%A6%A8-%E0%A6%B8%E0%A6%B9%E0%A6%9C%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3-%E0%A6%86%E0%A6%A6%E0%A7%87%E0%A6%B6-%E0%A7%A8%E0%A7%A6%E0%A7%A8%E0%A7%A6"
-                      
-                      className="mt-3 inline-flex items-center"
-                      target="_blank"
-                    >
-                      {isEnglish ? " Learn More" : "আরও জানুন"}
-                      <svg
+                  <Link
+                    href="https://mof.gov.bd/site/notices/abe27e3a-4866-4a0c-9402-a5eb7fe6659f/%E0%A6%B8%E0%A6%B0%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%BF-%E0%A6%95%E0%A6%B0%E0%A7%8D%E0%A6%AE%E0%A6%9A%E0%A6%BE%E0%A6%B0%E0%A7%80%E0%A6%97%E0%A6%A3%E0%A7%87%E0%A6%B0-%E0%A6%AA%E0%A7%87%E0%A6%A8%E0%A6%B6%E0%A6%A8-%E0%A6%B8%E0%A6%B9%E0%A6%9C%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3-%E0%A6%86%E0%A6%A6%E0%A7%87%E0%A6%B6-%E0%A7%A8%E0%A7%A6%E0%A7%A8%E0%A7%A6"
+                    className="mt-3 inline-flex items-center"
+                    target="_blank"
+                  >
+                    {isEnglish ? " Learn More" : "আরও জানুন"}
+                    <svg
                       fill="none"
                       stroke="currentColor"
                       strokeLinecap="round"
@@ -173,8 +180,7 @@ function Homepage() {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                    </Link>
-                 
+                  </Link>
                 </div>
               </div>
             </div>
@@ -219,8 +225,9 @@ function Homepage() {
                     </p>
                   )}
                   <Link
-                    href={"/contact"}
+                    href={"https://mof.portal.gov.bd/site/page/9900251d-ded4-4273-8531-63700c2d3a91/Contact"}
                     className="mt-3 inline-flex items-center"
+                    target="_blank" 
                   >
                     {isEnglish ? "Contact Here" : "এখানে যোগাযোগ করুন"}
                     <svg
@@ -249,11 +256,11 @@ function Homepage() {
         <div className="container px-5 py-16 mx-auto">
           {isEnglish ? (
             <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
-              Officers
+              Officer's Quote
             </h1>
           ) : (
             <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
-              অফিসাররা
+              অফিসারের উদ্ধৃতি
             </h1>
           )}
           <div className="flex flex-wrap -m-4">
@@ -268,10 +275,14 @@ function Homepage() {
                   <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z" />
                 </svg>
                 <p className="leading-relaxed mb-6">
-                  Synth chartreuse iPhone lomo cray raw denim brunch everyday
-                  carry neutra before they sold out fixie 90's microdosing.
-                  Tacos pinterest fanny pack venmo, post-ironic heirloom
-                  try-hard pabst authentic iceland.
+                  We are thrilled to introduce the ePension System, a
+                  transparent and bribe-free platform designed to ensure that
+                  your pension is processed smoothly and efficiently. Your trust
+                  is invaluable to us, and with this system, we are committed to
+                  eradicating any obstacles in your pension approval process.
+                  Rest assured, your applications will be handled with the
+                  utmost integrity and accountability. Let's build a
+                  corruption-free future together.
                 </p>
                 <a className="inline-flex items-center">
                   <img
@@ -281,9 +292,8 @@ function Homepage() {
                   />
                   <span className="flex-grow flex flex-col pl-4">
                     <span className="title-font font-medium text-gray-900">
-                      Holden Caulfield
+                      Head Of Office
                     </span>
-                    <span className="text-gray-500 text-sm">UI DEVELOPER</span>
                   </span>
                 </a>
               </div>
@@ -299,10 +309,13 @@ function Homepage() {
                   <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z" />
                 </svg>
                 <p className="leading-relaxed mb-6">
-                  Synth chartreuse iPhone lomo cray raw denim brunch everyday
-                  carry neutra before they sold out fixie 90's microdosing.
-                  Tacos pinterest fanny pack venmo, post-ironic heirloom
-                  try-hard pabst authentic iceland.
+                  Embrace the future of pension processing with our ePension
+                  System. As your Assistant Accountant General, I assure you a
+                  fair, prompt, and transparent approval process. This system is
+                  designed to eliminate any room for bribery and ensure that
+                  your pension reaches you without unnecessary delays. Your
+                  financial well-being is our priority, and we are committed to
+                  providing you with a system you can trust.
                 </p>
                 <a className="inline-flex items-center">
                   <img
@@ -312,9 +325,8 @@ function Homepage() {
                   />
                   <span className="flex-grow flex flex-col pl-4">
                     <span className="title-font font-medium text-gray-900">
-                      Alper Kamu
+                      Assistant Accountant General
                     </span>
-                    <span className="text-gray-500 text-sm">DESIGNER</span>
                   </span>
                 </a>
               </div>
@@ -392,53 +404,47 @@ function Homepage() {
             </div>
           </div>
           {isEnglish ? (
-            <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
-              <div className="relative mb-4">
-                <label
-                  htmlFor="name"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-              <div className="relative mb-4">
-                <label
-                  htmlFor="email"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-              <div className="relative mb-4">
-                <label
-                  htmlFor="message"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                  defaultValue={""}
-                />
-              </div>
-              <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-                Send
-              </button>
-            </div>
+      <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+      <div className="relative mb-4">
+        <label htmlFor="name" className="leading-7 text-sm text-gray-600">
+          Name
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+      </div>
+      <div className="relative mb-4">
+        <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+      </div>
+      <div className="relative mb-4">
+        <label htmlFor="message" className="leading-7 text-sm text-gray-600">
+          Message
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+          defaultValue={""}
+        />
+      </div>
+      <button
+        onClick={handleSubmit}
+        className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+      >
+        Send
+      </button>
+    </div>
           ) : (
             <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
               <div className="relative mb-4">

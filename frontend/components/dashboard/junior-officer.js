@@ -5,12 +5,13 @@ import {
   EyeOutlined,
   FlagOutlined
 } from "@ant-design/icons";
-import { Button, Table, message } from "antd";
+import { Button, Spin, Table, message } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { JuniorOfficerProfile, fetchPensions, updateJuniorOfficer } from '@/app/feature/juniorOfficer/juniorOfficerSlice';
 import Link from 'next/link';
 import ViewPensionForm from './ViewPensionForm';
+import ViewTestimonial from './ViewTestimonial';
 
 function JuniorOfficer({ role }) {
   const [open, setOpen] = useState(false);
@@ -25,7 +26,7 @@ function JuniorOfficer({ role }) {
   }, [dispatch]);
 
   // All Junior Officer Data
-  const { allApplications, juniorOfficer } = useSelector((state) => state.juniorOfficer);
+  const { allApplications, juniorOfficer,loading } = useSelector((state) => state.juniorOfficer);
   const singleUserData = allApplications?.find((user) => user._id === user._id ? user : null);
 
   // console.log("singleUserData: ", singleUserData);
@@ -103,14 +104,35 @@ function JuniorOfficer({ role }) {
     { title: "Process Status", dataIndex: `${"rejected_by_role" !== "" ? "process_status_by_role" : ""}` },
 
     {
-      title: "Actions",
+      title: <div style={{ textAlign: 'center' }}>Actions</div>,
       render: (record) => {
         // console.log("record: ", record);
         return (
           <div className="grid grid-cols-1">
             <div>
             <div className='flex gap-10 items-center'>
-  {
+            {juniorOfficer?.account_status === 'active' ? (
+    <>
+          <Link href={{
+        pathname: '/dashboard',
+        query: record.formData,
+      }}
+      >
+        
+        <ViewPensionForm role={"juniorOfficer"} setOpen={setOpen} open={open} />
+      </Link>
+         {/* testimonial section start */}
+          <Link href={{
+        pathname: '/dashboard',
+        query: record.formData,
+      }}
+      >
+        
+        <ViewTestimonial role={"juniorOfficer"} setOpen={setOpen} open={open} />
+      </Link>
+         {/* testimonial section end */}
+
+      {
     <select value={status.id === record.id ? status.status : null} onChange={(e) => setStatus({ status: e.target.value, id: record.id })} className='p-2 bg-gray-100 border-gray-300'>
       <option value="pending">Senior Officer</option>
       <option value="rejected">Rejected</option>
@@ -127,8 +149,6 @@ function JuniorOfficer({ role }) {
     </div>
   ) : null}
 
-  {juniorOfficer?.account_status === 'active' ? (
-    <>
       <button
         className={`${
           (singleUserData?.process_status_by_role === 'assistantGeneral' || record?.isexpired === "Expired") ||
@@ -141,14 +161,7 @@ function JuniorOfficer({ role }) {
       >
         <CheckOutlined /> Submit
       </button>
-      <Link href={{
-        pathname: '/dashboard',
-        query: record.formData,
-      }}
-      >
-        
-        <ViewPensionForm role={"juniorOfficer"} setOpen={setOpen} open={open} />
-      </Link>
+
 
     </>
   ) : juniorOfficer?.account_status === 'deactive' || record?.isexpired === "Avaiable" ? (
@@ -159,6 +172,10 @@ function JuniorOfficer({ role }) {
       <CheckOutlined /> Submit (Deactive)
     </button>
   ) : null}
+         
+ 
+
+ 
 </div>
 
             </div>
@@ -172,6 +189,10 @@ function JuniorOfficer({ role }) {
 
   return (
     <>
+     {loading && 
+         <div className='flex items-center justify-center h-screen'>
+         <Spin size="large" />
+       </div>}
       <div className="mx-24 mt-20 flex items-center gap-4">
         <div>
           <span className='font-bold text-[20px]' >
@@ -204,6 +225,7 @@ function JuniorOfficer({ role }) {
 
    <div className="w-full md:mt-8">
      <h2 className="text-xl mb-4">Pension Holder Form Data:</h2>
+   
      <Table
        dataSource={dataSource}
        columns={columns}

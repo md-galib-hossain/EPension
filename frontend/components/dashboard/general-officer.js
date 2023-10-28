@@ -4,7 +4,7 @@ import {
   CheckOutlined,
   FlagOutlined,
 } from "@ant-design/icons";
-import { Button, Table, message } from "antd";
+import { Button, Spin, Table, message } from "antd";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,7 @@ function GeneralOfficer({ role }) {
   const [assistantGeneral, setAssistantGeneral] = useState({});
   const [govtData, setGovtData] = useState([]); // State to store government data
   // Pension Form Data
-  const { allApplications } = useSelector((state) => state.GeneralOfficer);
+  const { allApplications,loading } = useSelector((state) => state.GeneralOfficer);
   const singleUserData = allApplications?.find((user) => user._id === user._id ? user : null);
    // Find the matching govtData object based on the nid_number condition
    
@@ -137,8 +137,11 @@ function GeneralOfficer({ role }) {
       render: (record) => {
         return (
           <div className="grid grid-cols-1">
+            
             <div>
+         
               <div className='flex gap-10 items-center'>
+             
                 {
                   // status.id === record.id && 
                   <select value={status.id === record.id ? status.status : null} onChange={(e) => setStatus({ status: e.target.value, id: record.id })} className='p-2 bg-gray-100 border-gray-300'>
@@ -196,7 +199,12 @@ function GeneralOfficer({ role }) {
   ];
   return (
     <>
+       {loading && 
+         <div className='flex items-center justify-center h-screen'>
+         <Spin size="large" />
+       </div>}
       <div className="mx-24 mt-20 flex items-center gap-4">
+        
         <div>
           <span className='font-bold text-[20px]' >
             Account Type:

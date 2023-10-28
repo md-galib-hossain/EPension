@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchReports, allOfficers, fetchReportById, fetchAllPensions } from '@/app/feature/headOfficer/headOfficerSlice';
 import OfficersProfile from './OfficersProfile';
 import ComplainTable from './complainTable';
+import { Spin } from 'antd';
+
 
 const HeadOfficer = ({ role }) => {
 
@@ -39,8 +41,10 @@ const HeadOfficer = ({ role }) => {
     <div className='mt-24'>
       <h1 className='text-2xl font-semibold ml-6 text-center'>Head Of Office Dashboard </h1>
       {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
+         <div className='flex items-center justify-center h-screen'>
+         <Spin size="large" />
+       </div>
+    ) : error ? (
         <p className='text-red-500'>Error: {error.message}</p>
       ) : (
         <div className='grid grid-cols-1 justify-center mx-6'>
