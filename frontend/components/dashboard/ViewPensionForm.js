@@ -9,7 +9,7 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
   const matchingGovtData = govtData?.find(
     (item) => item.nidNumber == singleUserData.nidNumber
   );
-
+  console.log(matchingGovtData,"haha")
   const closeModal = () => {
     setOpen(false);
   };
@@ -37,13 +37,13 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
       >
         <div
           className={
-            role === "juniorOfficer" || role === "headOfOffice"
+            role === "juniorOfficer"
               ? "absolute w-full max-w-2xl max-h-full"
               : "absolute w-full max-w-6xl max-h-full"
           }
           style={{
-            top: role === "juniorOfficer" || role === "headOfOffice" ? "10%" : "2%",
-            left: role === "juniorOfficer" || role === "headOfOffice" ? "30%" : "12%",
+            top: role === "juniorOfficer" ? "10%" : "2%",
+            left: role === "juniorOfficer" ? "30%" : "12%",
           }}
         >
           {/* <!-- Modal content --> */}
@@ -143,11 +143,7 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
                       Job Post : {singleUserData.jobPost}
                     </label>
                   </div>
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Job ID : {singleUserData.jobId}
-                    </label>
-                  </div>
+              
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Joining Date : {singleUserData.joingDateOffice}
@@ -175,7 +171,7 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
                   </div>
                 </div>
                 {/* professional information end */}
-                {role === "generalOfficer" && (
+                {role === "generalOfficer" || role === "headOficer" && (
                   <Divider
                     type="vertical"
                     className="h-auto mx-4 bg-blue-600"
@@ -183,9 +179,9 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
                 )}
 
                 {/* database information start */}
-                {role === "juniorOfficer" || role === "headOfOffice" ? (
+                {role === "juniorOfficer" ? (
                   ""
-                ) : role === "generalOfficer" && matchingGovtData ? (
+                ) : (role === "generalOfficer" || role === "headOfOffice") && matchingGovtData ? (
                   <div
                     className="flex flex-col max-h-[560px] flex-1 overflow-y-auto"
                     style={{
@@ -208,41 +204,41 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
                           <div className="flex items-center justify-center">
                             <img
                               className="w-20 h-20 object-cover rounded-none"
-                              src={matchingGovtData.profileImage}
+                              src={matchingGovtData?.profileImage}
                             />
                           </div>
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Full Name :{matchingGovtData.fullName}
+                          Full Name :{matchingGovtData?.fullName}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Age :{matchingGovtData.Age}
+                          Age :{matchingGovtData?.Age}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Father Name :{matchingGovtData.fathersName}
+                          Father Name :{matchingGovtData?.fathersName}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Mother Name : {matchingGovtData.mothersName}
-                        </label>
-                      </div>
-
-                      <div>
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          NID Number : {matchingGovtData.nidNumber}
+                          Mother Name : {matchingGovtData?.mothersName}
                         </label>
                       </div>
 
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Postal Code : {matchingGovtData.postalcode}
+                          NID Number : {matchingGovtData?.nidNumber}
+                        </label>
+                      </div>
+
+                      <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Postal Code : {matchingGovtData?.postalcode}
                         </label>
                       </div>
 
@@ -258,37 +254,33 @@ export default function ViewPensionForm({ govtData, setOpen, open, role }) {
                       <h3>Job Information</h3>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Job Post : {matchingGovtData.jobPost}
+                          Job Post : {matchingGovtData?.jobPost}
+                        </label>
+                      </div>
+                 
+                      <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Joining Date : {matchingGovtData?.joingDateOffice}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Job ID : {matchingGovtData.jobId}
+                          Retired Date : {matchingGovtData?.retiredDate}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Joining Date : {matchingGovtData.joingDateOffice}
+                          Last Basic Salary: {matchingGovtData?.basic_slary}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Retired Date : {matchingGovtData.retiredDate}
+                          Bank Account: {matchingGovtData?.bankAccount}
                         </label>
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Last Basic Salary: {matchingGovtData.basic_slary}
-                        </label>
-                      </div>
-                      <div>
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Bank Account: {matchingGovtData.bankAccount}
-                        </label>
-                      </div>
-                      <div>
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Department: {matchingGovtData.jobDepartment}
+                          Department: {matchingGovtData?.jobDepartment}
                         </label>
                       </div>
                     </div>

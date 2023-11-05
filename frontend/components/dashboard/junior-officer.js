@@ -157,7 +157,7 @@ function JuniorOfficer({ role }) {
                         }
                         className="p-2 bg-gray-100 border-gray-300"
                       >
-                        <option value="pending">Senior Officer</option>
+                        <option value="pending">Approve</option>
                         <option value="rejected">Reject</option>
                       </select>
                     }
@@ -253,7 +253,7 @@ function JuniorOfficer({ role }) {
                     rejectionReason.trim() === ""
                   }
                 >
-                  <div className="flex gap-2">  <CheckOutlined /> Submit</div>
+                  <div className="flex gap-2">  <CheckOutlined />Submit</div>
                  
                 </button>
                 ) : juniorOfficer?.account_status === "deactive" ||

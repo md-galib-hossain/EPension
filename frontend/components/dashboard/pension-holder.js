@@ -216,7 +216,12 @@ function PensionHolder() {
         <tbody>
           <tr>
             <td className="border py-2 px-4">Image</td>
-            <td className="border py-2 px-4 flex items-center justify-center"><img className="w-16 h-16 object-cover rounded-none" src={matchingUser?.profileImage}/></td>
+            <td className="border py-2 px-4 flex items-center justify-center">
+              <img
+                className="w-16 h-16 object-cover rounded-none"
+                src={matchingUser?.profileImage}
+              />
+            </td>
           </tr>
           <tr>
             <td className="border py-2 px-4">Name</td>
@@ -282,10 +287,7 @@ function PensionHolder() {
             <td className="border py-2 px-4">Job Post</td>
             <td className="border py-2 px-4">{matchingUser?.jobPost}</td>
           </tr>
-          <tr>
-            <td className="border py-2 px-4">Job Id</td>
-            <td className="border py-2 px-4">{matchingUser?.jobId}</td>
-          </tr>
+
           <tr>
             <td className="border py-2 px-4">Bank Account</td>
             <td className="border py-2 px-4">{matchingUser?.bankAccount}</td>
@@ -396,26 +398,35 @@ function PensionHolder() {
   //     { age: '14 years', currentAmount: '48%', redeciteAmount: '54%' },
   // ];
 
-  // bujhinai
   const data = [];
-  for (let years = 9; years <= 25; years++) {
-    const currentAmount = 32 + (years - 9) * 3;
-    const redeciteAmount = 33 + (years - 9) * 3;
+  for (let years = 10; years <= 25; years++) {
+    // 36 is the starting percentage and 10 is the starting years
+    // in each age there are 3% difference
+    const currentAmount = 36 + (years - 10) * 3;
     data.push({
       age: `${years} years`,
       currentAmount: `${currentAmount}%`,
     });
   }
 
-  // Calculate the percentage of currentAmount and redeciteAmount based on yearDifference
-  const currentAmountPercentage = 32 + (yearDifference - 9) * 3;
-
+  // calculating monthly pension start
+  // Calculate the percentage of currentAmount based on yearDifference
+  const currentAmountPercentage = 36 + (yearDifference - 10) * 3;
   // console.log("currentAmountPercentage: ", currentAmountPercentage);
 
   // Calculate pension using the provided formula
   // console.log(`haha${matchingUser?.basic_slary , currentAmountPercentage} / 2 + 1500`);
+  const fixedGratitude230 = yearDifference >= 20 && 230;
+  const fixedGratitude245 = yearDifference >= 15 && 245;
+  const fixedGratitude260 = yearDifference >= 10 && 260;
+
   const currentpension =
     (matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2 + 1500;
+  const currentGratitude =
+    ((matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2) *
+    fixedGratitude230 ||
+    fixedGratitude245 ||
+    fixedGratitude260;
 
   const date = new Date();
   let day = date.getDate();
@@ -449,20 +460,19 @@ function PensionHolder() {
     currentPensionDateParts[0]
   );
 
-  // Calculate the total difference in months
-  const monthsDiff =
-    (currentPensionDateObj.getFullYear() - retiredDateObj.getFullYear()) * 12 +
-    (currentPensionDateObj.getMonth() - retiredDateObj.getMonth());
+  // // Calculate the total difference in months
+  // const monthsDiff =
+  //   (currentPensionDateObj.getFullYear() - retiredDateObj.getFullYear()) * 12 +
+  //   (currentPensionDateObj.getMonth() - retiredDateObj.getMonth());
 
-  // Calculate totalPension based on the difference in months (total monthly difference)
-  const totalPension =
-    monthsDiff !== 0 ? currentpension * monthsDiff : currentpension;
+  // // Calculate totalPension based on the difference in months (total monthly difference)
+  // const totalPension =
+  //   monthsDiff !== 0 ? currentpension * monthsDiff : currentpension;
 
   //new function total pension with that haven't withdrawn yet end
 
   // Download PDF
   const handleDownloadPDF = () => {
-
     //     Total Pension (from retirement to current date): ${totalPension}
 
     // Create a new jsPDF instance
@@ -506,7 +516,8 @@ function PensionHolder() {
     -------------------
     Total Years of Service: ${yearDifference}
     Last Basic Salary: ${matchingUser?.basic_slary}
-    Monthly Pension Rate: ${currentpension}
+    Monthly Pension: ${currentpension}
+    Gratitude: ${currentGratitude}
     Pension Book Issuance Date: ${currentDate}
 
     Employment Dates:
@@ -522,9 +533,9 @@ function PensionHolder() {
     Date
     ${currentDate}
 `;
-//   [Government Department Name]
-// [Contact Information]
-// [Address]
+    //   [Government Department Name]
+    // [Contact Information]
+    // [Address]
 
     // Add the content to the PDF after the image
     pdf.text(content, 10, 70);
@@ -570,7 +581,7 @@ function PensionHolder() {
       <table className="w-full mt-4">
         <thead>
           <tr className="bg-[#009688] text-white">
-            <th className="py-2 px-4">Age of pension</th>
+            <th className="py-2 px-4">Length of Employment</th>
             <th className="py-2 px-4">Pension Percentages</th>
           </tr>
         </thead>
@@ -584,11 +595,16 @@ function PensionHolder() {
         </tbody>
       </table>
       <h2 className="py-10">
-        Monthly Pension = (Last Basic Salary * Pension Percentage from above table) / 2 + Medical
-        Treatment Fees
+        Monthly Pension = (Last Basic Salary * Pension Percentage from above
+        table) / 2 + Medical Treatment Fees
+      </h2>
+      <h2 className="pb-10">
+        Gratitude = (Last Basic Salary * Pension Percentage from above table) /
+        2 * Gratitude Percentage
       </h2>
       <div className="py-10 bg-[#009688] text-white">
         <p> Your Monthly Pension : {Math.floor(currentpension)}</p>
+        <p> Your Gratitude : {Math.floor(currentGratitude)}</p>
         {/* <p>
           Total Pension From Retirement to Application Date:
           {Math.floor(totalPension)}

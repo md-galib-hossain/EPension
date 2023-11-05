@@ -72,7 +72,7 @@ function GeneralOfficer({ role }) {
     setLocalStorage_user_id(user._id);
   }, []);
 
-
+console.log(govtData)
 
   // Function to update the status and trigger Redux action
   const handleUpdateStatus = (formId) => {
@@ -166,7 +166,20 @@ function GeneralOfficer({ role }) {
                   </div>
                 ) : null}
 
-                {assistantGeneral?.account_status === 'active' ? (
+
+
+                {/* ekhane button silo */}
+              </div>
+            </div>
+          </div >
+        );
+      },
+    },
+    { title: "Submit", render : (record) =>{
+
+      return(
+        <>
+        {assistantGeneral?.account_status === 'active' ? (
                   <>
                     <button
                       className={`${singleUserData?.process_status_by_role === 'juniorOfficer' || record?.isexpired === "Expired" || (status.status === 'rejected' && rejectionReason.trim() === '')
@@ -177,8 +190,6 @@ function GeneralOfficer({ role }) {
                     >
                       <CheckOutlined /> Submit
                     </button>
-                    
-
                   </>
                 ) : assistantGeneral?.account_status === 'deactive' || record?.isexpired === "Avaiable" ? (
                   <button
@@ -187,13 +198,9 @@ function GeneralOfficer({ role }) {
                   >
                     <CheckOutlined /> Submit (Deactive)
                   </button>
-                ) : null}
-              </div>
-            </div>
-          </div >
-        );
-      },
-    },
+                ) : null}</>
+      )
+    } },
     { title: "Appliction Expired date", dataIndex: `${"isexpired"}` },
   ];
   return (

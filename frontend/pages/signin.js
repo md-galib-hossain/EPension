@@ -47,6 +47,7 @@ export default function signin() {
 
       // Check if the user exists
       resetForm({ values: { email: '', password: '' } });
+      
       // window.location.reload();
     },
   });
@@ -96,7 +97,7 @@ export default function signin() {
                       onChange={formik.handleChange}
                       value={formik.values.email}
                       className="w-full bg-white  rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-300 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                      placeholder=""
+                      placeholder="demo@gmail.com"
                     />
                   </div>
                   {/* {srenderEmailError} */}
@@ -113,7 +114,7 @@ export default function signin() {
                       id="password"
                       onChange={formik.handleChange}
                       value={formik.values.password}
-                      placeholder="••••••••"
+                      placeholder="password"
                       className="w-full bg-white  rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-1 focus:ring-indigo-200 text-base outline-none text-gray-300 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
                   </div>
