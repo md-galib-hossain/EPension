@@ -399,10 +399,45 @@ function PensionHolder() {
   // ];
 
   const data = [];
-  for (let years = 10; years <= 25; years++) {
-    // 36 is the starting percentage and 10 is the starting years
-    // in each age there are 3% difference
-    const currentAmount = 36 + (years - 10) * 3;
+  for (let years = 5; years <= 25; years++) {
+    let currentAmount;
+  
+    if (years <= 12) {
+      // 21 is the starting percentage and 5 is the starting years
+      // in each age there are 3% difference
+      currentAmount = 21 + (years - 5) * 3;
+    } else if (years === 12) {
+      // Special case for age 12
+      currentAmount = 43;
+    } else if (years === 13) {
+      currentAmount = 47;
+    } else if (years === 14) {
+      currentAmount = 51;
+    } else if (years === 15) {
+      currentAmount = 54;
+    } else if (years === 16) {
+      currentAmount = 57;
+    } else if (years === 17) {
+      currentAmount = 63;
+    } else if (years === 18) {
+      currentAmount = 65;
+    } else if (years === 19) {
+      currentAmount = 69;
+    } else if (years === 20) {
+      currentAmount = 72;
+    } else if (years === 21) {
+      currentAmount = 75;
+    } else if (years === 22) {
+      currentAmount = 79;
+    } else if (years === 23) {
+      currentAmount = 83;
+    } else if (years === 24) {
+      currentAmount = 87;
+    } else {
+      // For age 25 or more
+      currentAmount = 90;
+    }
+  
     data.push({
       age: `${years} years`,
       currentAmount: `${currentAmount}%`,
@@ -411,7 +446,11 @@ function PensionHolder() {
 
   // calculating monthly pension start
   // Calculate the percentage of currentAmount based on yearDifference
-  const currentAmountPercentage = 36 + (yearDifference - 10) * 3;
+  // const currentAmountPercentage = 36 + (yearDifference - 10) * 3;
+  const currentAmountPercentage =
+  yearDifference <= 12 ? 21 + (yearDifference - 5) * 3 : yearDifference === 13 ? 43 : yearDifference === 14 ? 47 : yearDifference === 15 ? 51 :
+  yearDifference === 16 ? 54 : yearDifference === 17 ? 57 : yearDifference === 18 ? 63 : yearDifference === 19 ? 65 : yearDifference === 20 ? 69 :
+  yearDifference === 21 ? 72 : yearDifference === 22 ? 75 : yearDifference === 23 ? 79 : yearDifference === 24 ? 87 : 90;
   // console.log("currentAmountPercentage: ", currentAmountPercentage);
 
   // Calculate pension using the provided formula
@@ -419,12 +458,13 @@ function PensionHolder() {
   const fixedGratitude230 = yearDifference >= 20 ? 230 : 0;
   const fixedGratitude245 = yearDifference >= 15 ? 245 : 0;
   const fixedGratitude260 = yearDifference >= 10 ? 260 : 0;
+  const fixedGratitude265 = yearDifference >= 5 ? 265 : 0;
   const currentpension =
     (matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2 + 1500;
   const currentGratitude =
     ((matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2) *(fixedGratitude230 ||
       fixedGratitude245 ||
-      fixedGratitude260)
+      fixedGratitude260 || fixedGratitude265)
  
 
   const date = new Date();
