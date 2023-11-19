@@ -131,6 +131,15 @@ console.log(govtData)
     { title: "Submission Date", dataIndex: "date" },
     { title: "Application Status", dataIndex: "status" },
     { title: "Process Status", dataIndex: `${"rejected_by_role" !== "" ? "process_status_by_role" : ""}` },
+    { title: <div style={{ textAlign: "center" }}>View Form</div>, render : (record)=>{
+      return (
+<div className='flex justify-center'>
+<Link href={{pathname: '/dashboard',query: record.formData,}}>
+<ViewPensionForm govtData={govtData} role={"generalOfficer"} setOpen={setOpen} open={open} />
+ </Link>
+</div>
+      )
+    }},
 
     {
       title: <div style={{ textAlign: "center" }}>Actions</div>,
@@ -140,14 +149,8 @@ console.log(govtData)
             
             <div>
          
-              <div className='flex gap-10 items-center'>
-              <Link href={{
-                      pathname: '/dashboard',
-                      query: record.formData,
-                    }}
-                    >
-                      <ViewPensionForm govtData={govtData} role={"generalOfficer"} setOpen={setOpen} open={open} />
-                    </Link>
+              <div className='flex flex-col gap-2 items-center'>
+              
                 {
                   // status.id === record.id && 
                   <select value={status.id === record.id ? status.status : null} onChange={(e) => setStatus({ status: e.target.value, id: record.id })} className='p-2 bg-gray-100 border-gray-300'>

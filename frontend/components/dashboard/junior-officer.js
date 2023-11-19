@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  DeleteOutlined,
+  
   CheckOutlined,
-  EyeOutlined,
   FlagOutlined,
 } from "@ant-design/icons";
 import { Button, Spin, Table, message } from "antd";
@@ -111,18 +110,10 @@ function JuniorOfficer({ role }) {
       title: "Process Status",
       dataIndex: `${"rejected_by_role" !== "" ? "process_status_by_role" : ""}`,
     },
-
-    {
-      title: <div style={{ textAlign: "center" }}>Actions</div>,
-      render: (record) => {
-        // console.log("record: ", record);
-        return (
-          <div className="grid grid-cols-1">
-            <div>
-              <div className="flex gap-10 items-center">
-                {juniorOfficer?.account_status === "active" ? (
-                  <>
-                    <Link
+    { title: "View Forms", render : (record) =>{
+      return(
+<div className="flex justify-center">
+<Link
                       href={{
                         pathname: "/dashboard",
                         query: record.formData,
@@ -134,8 +125,16 @@ function JuniorOfficer({ role }) {
                         open={open}
                       />
                     </Link>
-                    {/* testimonial section start */}
-                    <Link
+
+</div>
+
+      )
+    }  },
+    { title: "View Testimonial" , render : (record) =>{
+      return(
+<div className="flex justify-center">
+   {/* testimonial section start */}
+   <Link
                       href={{
                         pathname: "/dashboard",
                         query: record.formData,
@@ -148,6 +147,24 @@ function JuniorOfficer({ role }) {
                       />
                     </Link>
                     {/* testimonial section end */}
+
+</div>
+
+      )
+    }  },
+
+    {
+      title: <div className="text-center">Actions</div>,
+      render: (record) => {
+        // console.log("record: ", record);
+        return (
+          <div className="grid grid-cols-1">
+            <div>
+              <div className="flex flex-col gap-2 items-center">
+                {juniorOfficer?.account_status === "active" ? (
+                  <>
+                  
+                 
 
                     {
                       <select
@@ -273,6 +290,7 @@ function JuniorOfficer({ role }) {
         );
       },
     },
+  
     { title: "Appliction Expired date", dataIndex: `${"isexpired"}` },
   ];
 

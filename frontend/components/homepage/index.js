@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FloatButton } from "antd";
 import { LiaLanguageSolid } from "react-icons/lia";
 import { blue } from "@ant-design/colors";
@@ -10,7 +10,15 @@ const allImages = {
 };
 
 function Homepage() {
-  const [isEnglish, setIsEnglish] = useState(false);
+  const [isEnglish, setIsEnglish] = useState(true);
+
+  const [checkUser, setCheckuser] = useState("")
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("user", user);
+    setCheckuser(user?.name)
+    
+  }, []);
 
   const toggleTranslation = () => {
     setIsEnglish(!isEnglish);
@@ -102,7 +110,7 @@ function Homepage() {
                       স্বয়ং আপনাকে ধন্যবাদ জানাবে।
                     </p>
                   )}
-                  <Link
+                 {checkUser ?  <Link
                     href={"/pension-form"}
                     className="mt-3 inline-flex items-center"
                   >
@@ -119,7 +127,24 @@ function Homepage() {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                  </Link>
+                  </Link> :  <Link
+                    href={"/signin"}
+                    className="mt-3 inline-flex items-center disabled"
+                  >
+                    {isEnglish ? "Apply Now" : "আবেদন করুন"}
+
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>}
                 </div>
               </div>
             </div>
@@ -263,7 +288,7 @@ function Homepage() {
               অফিসারের উদ্ধৃতি
             </h1>
           )}
-          <div className="flex flex-wrap -m-4">
+     {isEnglish ?      <div className="flex flex-wrap -m-4">
             <div className="p-4 md:w-1/2 w-full">
               <div className="h-full bg-gray-100 p-8 rounded">
                 <svg
@@ -274,6 +299,7 @@ function Homepage() {
                 >
                   <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z" />
                 </svg>
+                
                 <p className="leading-relaxed mb-6">
                   We are thrilled to introduce the ePension System, a
                   transparent and bribe-free platform designed to ensure that
@@ -331,7 +357,75 @@ function Homepage() {
                 </a>
               </div>
             </div>
-          </div>
+          </div> : <div className="flex flex-wrap -m-4">
+            <div className="p-4 md:w-1/2 w-full">
+              <div className="h-full bg-gray-100 p-8 rounded">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="block w-5 h-5 text-gray-400 mb-4"
+                  viewBox="0 0 975.036 975.036"
+                >
+                  <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z" />
+                </svg>
+                
+                <p className="leading-relaxed mb-6">
+                আমরা ePension সিস্টেম চালু করতে পেরে রোমাঞ্চিত, 
+                একটি স্বচ্ছ এবং ঘুষ-মুক্ত প্ল্যাটফর্ম যা আপনার পেনশন সহজে এবং 
+                দক্ষতার সাথে প্রক্রিয়া করা হয় তা নিশ্চিত করার জন্য ডিজাইন করা হয়েছে।
+                 আপনার আস্থা আমাদের কাছে অমূল্য, এবং এই সিস্টেমের সাহায্যে, আমরা আপনার 
+                 পেনশন অনুমোদন প্রক্রিয়ার যেকোনো বাধা দূর করতে প্রতিশ্রুতিবদ্ধ। নিশ্চিত থাকুন, আপনার 
+                 আবেদনগুলি অত্যন্ত সততা এবং জবাবদিহিতার সাথে পরিচালনা করা হবে। আসুন সবাই মিলে 
+                 দুর্নীতিমুক্ত ভবিষ্যৎ গড়ি।
+                </p>
+                <a className="inline-flex items-center">
+                  <img
+                    alt="testimonial"
+                    src="https://dummyimage.com/106x106"
+                    className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
+                  />
+                  <span className="flex-grow flex flex-col pl-4">
+                    <span className="title-font font-medium text-gray-900">
+                    অফিসের প্রধান
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div className="p-4 md:w-1/2 w-full">
+              <div className="h-full bg-gray-100 p-8 rounded">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="block w-5 h-5 text-gray-400 mb-4"
+                  viewBox="0 0 975.036 975.036"
+                >
+                  <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z" />
+                </svg>
+                <p className="leading-relaxed mb-6">
+                আমাদের ePension এর সাথে পেনশন প্রক্রিয়াকরণের ভবিষ্যতকে আলিঙ্গন করুন
+                  পদ্ধতি. আপনার মহাগাণনিক হিসাবে, আমি আপনাকে আশ্বস্ত করছি ক
+                  ন্যায্য, দ্রুত, এবং স্বচ্ছ অনুমোদন প্রক্রিয়া। এই ব্যবস্থা হল
+                  ঘুষের যেকোন জায়গা দূর করতে এবং তা নিশ্চিত করার জন্য ডিজাইন করা হয়েছে
+                  আপনার পেনশন অপ্রয়োজনীয় বিলম্ব ছাড়াই আপনার কাছে পৌঁছে যায়। তোমার
+                  আর্থিক সুস্থতা আমাদের অগ্রাধিকার, এবং আমরা প্রতিশ্রুতিবদ্ধ
+                  আপনি বিশ্বাস করতে পারেন এমন একটি সিস্টেম প্রদান করে।
+                </p>
+                <a className="inline-flex items-center">
+                  <img
+                    alt="testimonial"
+                    src="https://dummyimage.com/107x107"
+                    className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
+                  />
+                  <span className="flex-grow flex flex-col pl-4">
+                    <span className="title-font font-medium text-gray-900">
+                    মহাগাণনিক
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div> }
         </div>
       </section>
       {/* Officer Profile End */}
@@ -344,11 +438,11 @@ function Homepage() {
               width="100%"
               height="100%"
               className="absolute inset-0"
-              frameBorder={0}
+              // frameBorder={0}
               title="map"
-              marginHeight={0}
-              marginWidth={0}
-              scrolling="no"
+              // marginHeight={0}
+              // marginWidth={0}
+              // scrolling="no"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.53342217427!2d90.40408067861549!3d23.728350334686752!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8f741d2caa7%3A0xa7fde41e5add9f92!2sMinistry%20of%20Finance!5e0!3m2!1sen!2sbd!4v1695120699530!5m2!1sen!2sbd%22%20width=%22600%22%20height=%22450%22%20style=%22border:0;%22%20allowfullscreen=%22%22%20loading=%22lazy%22%20referrerpolicy=%22no-referrer-when-downgrade"
             />
             <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">

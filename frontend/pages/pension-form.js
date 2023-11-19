@@ -57,7 +57,7 @@ export default function PensionForm() {
     validationSchema: yup.object({
       fullName: yup
         .string()
-        .matches(/^[A-Za-z\s]+$/, "Father's Name must not contain numbers")
+        .matches(/^[A-Za-z\s]+$/, "Full Name must not contain numbers")
         .required("Full Name is required"),
         fathersName: yup
         .string()

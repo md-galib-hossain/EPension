@@ -396,8 +396,8 @@ const OfficersProfile = ({
     />
   </div>
 ) : application?.status === "approved" && (
-  !govtData.some(item => item.nidNumber === application?.nidNumber) ||
-  application?.testimonialImage
+  !govtData?.some(item => item.nidNumber === application.nidNumber) ||
+  !application?.testimonialImage
 ) ? (
   <div className="flex gap-2">
     {application?.status}
@@ -408,10 +408,11 @@ const OfficersProfile = ({
 ) : (
   application?.status
 )}
-                      </div>
+ </div>
+ 
                     </td>
                     <td className="px-6 py-4 whitespace-no-wrap">
-                      <div className="text-sm leading-5 text-gray-900">
+                      <div className="text-sm leading-5 flex justify-center text-gray-900">
                         {/* testimonial section start */}
                         <Link
                           href={{
@@ -429,7 +430,7 @@ const OfficersProfile = ({
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-no-wrap">
-                      <div className="text-sm leading-5 text-gray-900">
+                      <div className="text-sm flex justify-center leading-5 text-gray-900">
                         <Link
                           href={{
                             pathname: "/dashboard",

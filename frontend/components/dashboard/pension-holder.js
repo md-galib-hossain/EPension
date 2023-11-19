@@ -351,7 +351,7 @@ function PensionHolder() {
                 </div>
                 <div className="flex-1 text-center">
                   <h5 className="font-bold uppercase text-gray-500">
-                    Download Your Pension Ticket
+                    Download Your Pension Approval Letter
                   </h5>
                 </div>
               </div>
@@ -416,17 +416,16 @@ function PensionHolder() {
 
   // Calculate pension using the provided formula
   // console.log(`haha${matchingUser?.basic_slary , currentAmountPercentage} / 2 + 1500`);
-  const fixedGratitude230 = yearDifference >= 20 && 230;
-  const fixedGratitude245 = yearDifference >= 15 && 245;
-  const fixedGratitude260 = yearDifference >= 10 && 260;
-
+  const fixedGratitude230 = yearDifference >= 20 ? 230 : 0;
+  const fixedGratitude245 = yearDifference >= 15 ? 245 : 0;
+  const fixedGratitude260 = yearDifference >= 10 ? 260 : 0;
   const currentpension =
     (matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2 + 1500;
   const currentGratitude =
-    ((matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2) *
-    fixedGratitude230 ||
-    fixedGratitude245 ||
-    fixedGratitude260;
+    ((matchingUser?.basic_slary * currentAmountPercentage) / 100 / 2) *(fixedGratitude230 ||
+      fixedGratitude245 ||
+      fixedGratitude260)
+ 
 
   const date = new Date();
   let day = date.getDate();
